@@ -2,6 +2,7 @@
 \IEEEoverridecommandlockouts
 % The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
 \usepackage{cite}
+\usepackage{tabularx}
 \usepackage{amsmath,amssymb,amsfonts}
 \usepackage{algorithmic}
 \usepackage{graphicx}
@@ -59,6 +60,7 @@ as one part of the entire proceedings, and not as an independent document.
 Please do not revise any of the current designations.
 
 \section{Existing Methods}
+
 Before you begin to format your paper, first write and save the content as a 
 separate text file. Complete all content and organizational editing before 
 formatting. Please note sections \ref{AA}--\ref{SCM} below for more information on 
@@ -221,36 +223,67 @@ quantities and units. For example, write ``Temperature (K)'', not
 ``Temperature/K''.
 
 \section*{Research Plan}
+\subsection{Data Preprocessing}\label{AA}
+The data sets that will be used in this project are the following: AMZN and AAPL news, AMZN and AAPL stock prices, and AMZN and AAPL Tweets. Before extracting features from the text, the data had to be in the correct format. We merged the news data set with the stock data set on the date attribute. The same was done for the Tweets data set with the stock data set. Both data sets include the respective news content and Tweet content related to either AMZN or AAPL. The contents were cleaned to ensure that noise is reduced as much as possible - this includes lemmatizing the text, removing stop words, emoticons, punctuation, hashtags and other miscellaneous text that does not contribute meaning to the content. This also allows feature generation to be simpler and consistent. Each data set had the following attributes: 
+\begin{itemize}
+    \item Standardized date and time
+    \item Content (body of the news article or Tweet)
+    \item Stock open amount
+    \item Stock close amount
+    \item Stock high amount
+    \item Stock low amount
+    \item Stock direction (label)
+\end{itemize}
+To generate the labels, we used the stock price at that time and date to determine whether or not the direction of the price was going up (1) or down (0). 
 
-The preferred spelling of the word ``acknowledgment'' in America is without 
-an ``e'' after the ``g''. Avoid the stilted expression ``one of us (R. B. 
-G.) thanks $\ldots$''. Instead, try ``R. B. G. thanks$\ldots$''. Put sponsor 
-acknowledgments in the unnumbered footnote on the first page.
+\subsection{Feature Generation}
+There are a few methods that were used to generate features from the text.
+\begin{itemize}
+    \item Word2Vec
+    \item BERT
+    \item Sentiment Analysis
+\end{itemize}
+
+Word2Vec is a two-layer neural network that creates word vectors which can be used as features in natural language processing tasks. It takes the text data and learns vector representations of words. We can then calculate the distance between the word vectors using different distance measures such as the cosine similarity measure. Ideally, this distance should be small between words that are similar and larger for words that aren't as similar. (https://wiki.pathmind.com/word2vec)
+
+BERT provides a similar output to Word2Vec but takes a more complex, modern approach than Word2Vec. BERT, created by Google's NLP team, takes into account the bidirectional context of the tokens in a sentence during the training phase. It already comes pre-trained with a corpus of over 2.5 billion words. On a technical level, the BERT architecture is built on top a transformer. The exploration of BERT in this project is to see if these features provide better classification accuracy than the use of Word2Vec. (https://www.analyticsvidhya.com/blog/2021/06/why-and-how-to-use-bert-for-nlp-text-classification/)
+(https://www.analyticsvidhya.com/blog/2019/09/demystifying-bert-groundbreaking-nlp-framework/)
+
+Sentiment analysis is used to determine the overall opinion or feeling - positive, neutral, negative - of a document. There are many pre-trained models and packages to use for sentiment analysis such as NLTK, TextBlob, and Gensim. For the purpose of this project, we will be using NLTK. We will be splitting each document by sentence, and get a sentiment score for that sentence. Once the end of the document is reached, we will take the average of the sentiment scores and assign it to the document. This score will be used in conjunction with both WordVec and BERT for feature generation. (https://www.lexalytics.com/technology/sentiment-analysis)
+
+\subsection{Classification Models}
+There are a few models that will be used for the project. We will run both news and Twitter data sets on the models.
+\begin{itemize}
+    \item Logistic Regression
+    \item LightGBM
+    \item Topic Modeling
+\end{itemize}
+
+Logistic Regression is a supervised learning algorithm that is commonly used for binary classification tasks. The algorithm uses the logistic function which is shaped like an 'S' curve which is modeled after population growth, with the minimum and maximum of the function being 0 and 1 respectively. It predicts the probability that the data sample belongs to the default class, hence the range of the function. Although the model is built off of the logistic function, it is still a linear combination of the dependent variables. Logistic regression is traditionally known to be a linear classifier, so it will be worth exploring this classifier to see if either of the data sets could be linearly separable. (https://machinelearningmastery.com/logistic-regression-for-machine-learning/)
+
+LightGBM is a gradient boosted, supervised machine learning framework. It is traditionally used on larger data sets since it supports parallel, distributed learning. At it's core, LightGBM is a decision tree algorithm but what makes it different from other boosting algorithms is that it splits the tree at the leaf whereas others split the tree depth-wise. This makes LightGBM more accurate since it can reduce the loss when growing at the leaf. Another advantage of using LightGBM for larger data sets is that the training time is reduced because LightGBM uses histogram algorithms to place continuous features into buckets, which in turn reduces the memory usage. The downside to this model is that the model can easily be overfit if the number of data samples is not large enough, or if the parameters are not tuned correctly. Since the data sets for this project are fairly large, 475MB and 662MB for the news and Twitter data set respectively, it will be beneficial to experiment with a more complex model than Logistic Regression. 
+(https://www.analyticsvidhya.com/blog/2017/06/which-algorithm-takes-the-crown-light-gbm-vs-xgboost/)
+
+Topic modeling is an unsupervised machine learning method that groups documents together based on similar topics. Under the hood, topic modeling counts the words in the text corpus and groups similar word patterns together to create topics. Since this is an unsupervised method, no training is required. The output does not satisfy the classification task so more work will need to be done with this method to complete the task. The corpus for this method would remain the same as the firs two methods and each document will be assigned a "dominant" topic once the model is finished running. This dominant topic also has key phrases associated with it, so essentially each document will be assigned a dominant topic and key phrases. We will then create features from these key phrases by using Word2Vec or BERT in conjunction with the sentiment score. Once we have these features, we will train a a Logistic Regression model and run the classification this way. This is a different approach that has not been done yet in previous classes and uses an ensemble method to perform the classification task. (https://monkeylearn.com/blog/introduction-to-topic-modeling/)
+
 
 \section*{Timeline and Task Division}
+\begin{table}[htbp]
+\begin{center}
+\begin{tabular}{|l||c|c|} \hline\hline
+Task & Owner & Deadline \\ \hline 
+Merging news and stock data set & Rushil & 2/18/22 \\
+Data preprocessing, splitting training and testing & Crystal & 2/25/22 \\
+Method 1: Word2Vec, sentiment, LR & Brian, Joseph & 3/18/22 \\
+Method 2: BERT, sentiment, LightGBM & Hadi, Rushil & 3/18/22 \\
+Method 3: Topic model, sentiment, Word2Vec, LR & Crystal & 3/18/2022 \\
+Deliverable: Dashboard & Team & 3/21/2022 \\
+\hline\hline
+\end{tabular}
+\end{center}
+\end{table}
 
 \section*{Evaluation}
-
-\section*{References}
-
-Please number citations consecutively within brackets \cite{b1}. The 
-sentence punctuation follows the bracket \cite{b2}. Refer simply to the reference 
-number, as in \cite{b3}---do not use ``Ref. \cite{b3}'' or ``reference \cite{b3}'' except at 
-the beginning of a sentence: ``Reference \cite{b3} was the first $\ldots$''
-
-Number footnotes separately in superscripts. Place the actual footnote at 
-the bottom of the column in which it was cited. Do not put footnotes in the 
-abstract or reference list. Use letters for table footnotes.
-
-Unless there are six authors or more give all authors' names; do not use 
-``et al.''. Papers that have not been published, even if they have been 
-submitted for publication, should be cited as ``unpublished'' \cite{b4}. Papers 
-that have been accepted for publication should be cited as ``in press'' \cite{b5}. 
-Capitalize only the first word in a paper title, except for proper nouns and 
-element symbols.
-
-For papers published in translation journals, please give the English 
-citation first, followed by the original foreign-language citation \cite{b6}.
 
 \begin{thebibliography}{00}
 \bibitem{b1} G. Eason, B. Noble, and I. N. Sneddon, ``On certain integrals of Lipschitz-Hankel type involving products of Bessel functions,'' Phil. Trans. Roy. Soc. London, vol. A247, pp. 529--551, April 1955.
@@ -261,8 +294,4 @@ citation first, followed by the original foreign-language citation \cite{b6}.
 \bibitem{b6} Y. Yorozu, M. Hirano, K. Oka, and Y. Tagawa, ``Electron spectroscopy studies on magneto-optical media and plastic substrate interface,'' IEEE Transl. J. Magn. Japan, vol. 2, pp. 740--741, August 1987 [Digests 9th Annual Conf. Magnetics Japan, p. 301, 1982].
 \bibitem{b7} M. Young, The Technical Writer's Handbook. Mill Valley, CA: University Science, 1989.
 \end{thebibliography}
-\vspace{12pt}
-\color{red}
-IEEE conference templates contain guidance text for composing and formatting conference papers. Please ensure that all template text is removed from your conference paper prior to submission to the conference. Failure to remove the template text from your paper may result in your paper not being published.
-
 \end{document}
