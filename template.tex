@@ -33,183 +33,31 @@
 
 \maketitle
 
-\section{abstract}
-There is an incredible financial incentive to “solving” the problem of optimizing trading in the stock market. Many ideas have been tried and tested to varying degrees of success, basing their trading strategies on either mathematical models, ideas of momentum of the stock, volume, and other more advanced concepts as well. In this paper, we will discuss the development of several different trading strategies using modern machine learning and natural language processing. In this experiment, we will be applying our methodologies to the stocks AMZN and AAPL. Our dataset includes over 100,000 news articles and tweets related to these tickers and market data for both stocks with intervals of every 5 minutes between November 2017 and February 2019, which is the time interval we will be using to develop our trading strategies. In this paper, we will discuss the development of our strategies, which will be a combination of word encoders (word2vec, BERT, and Topic Modelling), sentiment analysis, and machine learning models (linear regression and LightGBM). In this paper, we will outline our research plan, evaluation metrics, and timeline for the completion of the experiment. 
+\begin{abstract}
+There is an incredible financial incentive to “solving” the problem of optimizing trading in the stock market. Many ideas have been tried and tested to varying degrees of success, basing their trading strategies on either mathematical models, ideas of momentum of the stock, volume, and other more advanced concepts as well. In this paper, we will discuss the development of several different trading strategies using modern machine learning and natural language processing. In this experiment, we will be applying our methodologies to the stocks AMZN and AAPL. Our data set includes over 100,000 news articles and tweets related to these tickers and market data for both stocks at the closing time between November 2017 and February 2019, which is the time interval we will be using to develop our trading strategies. In this paper, we will discuss the development of our strategies, which will be a combination of word encoders (Word2Vec, BERT, and Topic Modeling), sentiment analysis, and machine learning models (logistic regression and LightGBM). In this paper, we will outline our research plan, evaluation metrics, and timeline for the completion of the experiment. 
+\end{abstract}
+
+\begin{IEEEkeywords}
+Natural language processing, BERT, Word2Vec, Topic Modeling, classification, Tweets, stocks
+\end{IEEEkeywords}
+
 \section{Introduction}
-The stock market allows people to purchase a public company’s stock, which is a small piece of that company. Oftentimes, people purchase stocks in order to invest their money rather than putting their money in a savings account at a bank. Before online news articles and social media companies like Twitter, the stock market wouldn’t fluctuate as fast due to breaking news on a specific company. Lately, the United States has seen that news articles and tweets, from the renowned company, Twitter have begun to have an effect on the price of a certain company. Most companies also have social media platforms like Twitter and people that invest in these companies can infer things from sentiment and subject matter of the tweets coming from companies. A notable example is one when Elon Musk tweeted about thinking about taking Tesla private at \$420 and that he had funding. After this the stock price increased dramatically. One single person cannot keep up with the constant bombardment of information coming out on news articles and Twitter so our idea is to use this plentiful information and build models that can help predict stock price movement. We plan to use textual information by performing Natural Language Processing techniques like BERT and sentiment analysis and much more on the datasets soon to be described and use it to train our models and be able to predict stock directions in the stock market.
+The stock market allows people to purchase a public company’s stock, which is a small piece of that company \cite{b2}. Oftentimes, people purchase stocks in order to invest their money rather than putting their money in a savings account at a bank. Before online news articles and social media companies like Twitter, the stock market wouldn’t fluctuate as fast due to breaking news on a specific company. Lately, the United States has seen that news articles and tweets, from the renowned company, Twitter have begun to have an effect on the price of a certain company. Most companies also have social media platforms like Twitter and people that invest in these companies can infer things from sentiment and subject matter of the tweets coming from companies \cite{b6}. A notable example is one when Elon Musk tweeted about thinking about taking Tesla private at \$420 and that he had funding. After this the stock price increased dramatically \cite{b4}. One single person cannot keep up with the constant bombardment of information coming out on news articles and Twitter so our idea is to use this plentiful information and build models that can help predict stock price movement. We plan to use textual information by performing Natural Language Processing techniques like BERT and sentiment analysis and much more on the data sets soon to be described and use it to train our models and be able to predict stock directions in the stock market.
 
 \section{Data sets}
 
-\subsection{Maintaining the Integrity of the Specifications}
+\section{Existing Methods and Algorithms}
+The idea to predict stock market patterns and trends using viral tweets and news is not anything innovative or unique as there currently exists various model implementations. Here are some examples in which popular models and methodologies are used to obtain such predictions or other similar predictions.
+In \cite{b10}, the individual utilizes a Naive Bayes model on a set of verified tweet contents from publicly traded corporations executives and half-hourly stock data to predict stock movement of all NASDAQ and NYSE companies during that time of collection. The individual’s model was able to achieve an accuracy of 52\%.
 
-The IEEEtran class file is used to format your paper and style the text. All margins, 
-column widths, line spaces, and text fonts are prescribed; please do not 
-alter them. You may note peculiarities. For example, the head margin
-measures proportionately more than is customary. This measurement 
-and others are deliberate, using specifications that anticipate your paper 
-as one part of the entire proceedings, and not as an independent document. 
-Please do not revise any of the current designations.
+The authors in \cite{b1} utilize a logistic regression model on twitter content feeds and DJIA stock values from June 2009 to December 2009 to predict stock movement of DJIA. Their model was able to achieve an accuracy of 60\%.
 
-\section{Existing Methods}
+A Continuous DPM Model was utilized by the individuals in \cite{b9} to predict the S&P100 index stock movement using tweets involving the symbols of the S&P100 stocks. The model was able to achieve an accuracy of 60\% on average.
 
-Before you begin to format your paper, first write and save the content as a 
-separate text file. Complete all content and organizational editing before 
-formatting. Please note sections \ref{AA}--\ref{SCM} below for more information on 
-proofreading, spelling and grammar.
-
-Keep your text and graphic files separate until after the text has been 
-formatted and styled. Do not number text heads---{\LaTeX} will do that 
-for you.
-
-\subsection{Abbreviations and Acronyms}\label{AA}
-Define abbreviations and acronyms the first time they are used in the text, 
-even after they have been defined in the abstract. Abbreviations such as 
-IEEE, SI, MKS, CGS, ac, dc, and rms do not have to be defined. Do not use 
-abbreviations in the title or heads unless they are unavoidable.
-
-\subsection{Units}
-\begin{itemize}
-\item Use either SI (MKS) or CGS as primary units. (SI units are encouraged.) English units may be used as secondary units (in parentheses). An exception would be the use of English units as identifiers in trade, such as ``3.5-inch disk drive''.
-\item Avoid combining SI and CGS units, such as current in amperes and magnetic field in oersteds. This often leads to confusion because equations do not balance dimensionally. If you must use mixed units, clearly state the units for each quantity that you use in an equation.
-\item Do not mix complete spellings and abbreviations of units: ``Wb/m\textsuperscript{2}'' or ``webers per square meter'', not ``webers/m\textsuperscript{2}''. Spell out units when they appear in text: ``. . . a few henries'', not ``. . . a few H''.
-\item Use a zero before decimal points: ``0.25'', not ``.25''. Use ``cm\textsuperscript{3}'', not ``cc''.)
-\end{itemize}
-
-\subsection{Equations}
-Number equations consecutively. To make your 
-equations more compact, you may use the solidus (~/~), the exp function, or 
-appropriate exponents. Italicize Roman symbols for quantities and variables, 
-but not Greek symbols. Use a long dash rather than a hyphen for a minus 
-sign. Punctuate equations with commas or periods when they are part of a 
-sentence, as in:
-\begin{equation}
-a+b=\gamma\label{eq}
-\end{equation}
-
-Be sure that the 
-symbols in your equation have been defined before or immediately following 
-the equation. Use ``\eqref{eq}'', not ``Eq.~\eqref{eq}'' or ``equation \eqref{eq}'', except at 
-the beginning of a sentence: ``Equation \eqref{eq} is . . .''
-
-\subsection{\LaTeX-Specific Advice}
-
-Please use ``soft'' (e.g., \verb|\eqref{Eq}|) cross references instead
-of ``hard'' references (e.g., \verb|(1)|). That will make it possible
-to combine sections, add equations, or change the order of figures or
-citations without having to go through the file line by line.
-
-Please don't use the \verb|{eqnarray}| equation environment. Use
-\verb|{align}| or \verb|{IEEEeqnarray}| instead. The \verb|{eqnarray}|
-environment leaves unsightly spaces around relation symbols.
-
-Please note that the \verb|{subequations}| environment in {\LaTeX}
-will increment the main equation counter even when there are no
-equation numbers displayed. If you forget that, you might write an
-article in which the equation numbers skip from (17) to (20), causing
-the copy editors to wonder if you've discovered a new method of
-counting.
-
-{\BibTeX} does not work by magic. It doesn't get the bibliographic
-data from thin air but from .bib files. If you use {\BibTeX} to produce a
-bibliography you must send the .bib files. 
-
-{\LaTeX} can't read your mind. If you assign the same label to a
-subsubsection and a table, you might find that Table I has been cross
-referenced as Table IV-B3. 
-
-{\LaTeX} does not have precognitive abilities. If you put a
-\verb|\label| command before the command that updates the counter it's
-supposed to be using, the label will pick up the last counter to be
-cross referenced instead. In particular, a \verb|\label| command
-should not go before the caption of a figure or a table.
-
-Do not use \verb|\nonumber| inside the \verb|{array}| environment. It
-will not stop equation numbers inside \verb|{array}| (there won't be
-any anyway) and it might stop a wanted equation number in the
-surrounding equation.
-
-\subsection{Some Common Mistakes}\label{SCM}
-\begin{itemize}
-\item The word ``data'' is plural, not singular.
-\item The subscript for the permeability of vacuum $\mu_{0}$, and other common scientific constants, is zero with subscript formatting, not a lowercase letter ``o''.
-\item In American English, commas, semicolons, periods, question and exclamation marks are located within quotation marks only when a complete thought or name is cited, such as a title or full quotation. When quotation marks are used, instead of a bold or italic typeface, to highlight a word or phrase, punctuation should appear outside of the quotation marks. A parenthetical phrase or statement at the end of a sentence is punctuated outside of the closing parenthesis (like this). (A parenthetical sentence is punctuated within the parentheses.)
-\item A graph within a graph is an ``inset'', not an ``insert''. The word alternatively is preferred to the word ``alternately'' (unless you really mean something that alternates).
-\item Do not use the word ``essentially'' to mean ``approximately'' or ``effectively''.
-\item In your paper title, if the words ``that uses'' can accurately replace the word ``using'', capitalize the ``u''; if not, keep using lower-cased.
-\item Be aware of the different meanings of the homophones ``affect'' and ``effect'', ``complement'' and ``compliment'', ``discreet'' and ``discrete'', ``principal'' and ``principle''.
-\item Do not confuse ``imply'' and ``infer''.
-\item The prefix ``non'' is not a word; it should be joined to the word it modifies, usually without a hyphen.
-\item There is no period after the ``et'' in the Latin abbreviation ``et al.''.
-\item The abbreviation ``i.e.'' means ``that is'', and the abbreviation ``e.g.'' means ``for example''.
-\end{itemize}
-An excellent style manual for science writers is \cite{b7}.
-
-\subsection{Authors and Affiliations}
-\textbf{The class file is designed for, but not limited to, six authors.} A 
-minimum of one author is required for all conference articles. Author names 
-should be listed starting from left to right and then moving down to the 
-next line. This is the author sequence that will be used in future citations 
-and by indexing services. Names should not be listed in columns nor group by 
-affiliation. Please keep your affiliations as succinct as possible (for 
-example, do not differentiate among departments of the same organization).
-
-\subsection{Identify the Headings}
-Headings, or heads, are organizational devices that guide the reader through 
-your paper. There are two types: component heads and text heads.
-
-Component heads identify the different components of your paper and are not 
-topically subordinate to each other. Examples include Acknowledgments and 
-References and, for these, the correct style to use is ``Heading 5''. Use 
-``figure caption'' for your Figure captions, and ``table head'' for your 
-table title. Run-in heads, such as ``Abstract'', will require you to apply a 
-style (in this case, italic) in addition to the style provided by the drop 
-down menu to differentiate the head from the text.
-
-Text heads organize the topics on a relational, hierarchical basis. For 
-example, the paper title is the primary text head because all subsequent 
-material relates and elaborates on this one topic. If there are two or more 
-sub-topics, the next level head (uppercase Roman numerals) should be used 
-and, conversely, if there are not at least two sub-topics, then no subheads 
-should be introduced.
-
-\subsection{Figures and Tables}
-\paragraph{Positioning Figures and Tables} Place figures and tables at the top and 
-bottom of columns. Avoid placing them in the middle of columns. Large 
-figures and tables may span across both columns. Figure captions should be 
-below the figures; table heads should appear above the tables. Insert 
-figures and tables after they are cited in the text. Use the abbreviation 
-``Fig.~\ref{fig}'', even at the beginning of a sentence.
-
-\begin{table}[htbp]
-\caption{Table Type Styles}
-\begin{center}
-\begin{tabular}{|c|c|c|c|}
-\hline
-\textbf{Table}&\multicolumn{3}{|c|}{\textbf{Table Column Head}} \\
-\cline{2-4} 
-\textbf{Head} & \textbf{\textit{Table column subhead}}& \textbf{\textit{Subhead}}& \textbf{\textit{Subhead}} \\
-\hline
-copy& More table copy$^{\mathrm{a}}$& &  \\
-\hline
-\multicolumn{4}{l}{$^{\mathrm{a}}$Sample of a Table footnote.}
-\end{tabular}
-\label{tab1}
-\end{center}
-\end{table}
+In \cite{b14}, the authors attempted to predict the stock price direction by compiling a data set that comprises news related to that stock’s name and the stock’s closing price following that news and feeding it to a BERT model. The model was able to achieve an accuracy of 58\%.
 
 
-
-Figure Labels: Use 8 point Times New Roman for Figure labels. Use words 
-rather than symbols or abbreviations when writing Figure axis labels to 
-avoid confusing the reader. As an example, write the quantity 
-``Magnetization'', or ``Magnetization, M'', not just ``M''. If including 
-units in the label, present them within parentheses. Do not label axes only 
-with units. In the example, write ``Magnetization (A/m)'' or ``Magnetization 
-\{A[m(1)]\}'', not just ``A/m''. Do not label axes with a ratio of 
-quantities and units. For example, write ``Temperature (K)'', not 
-``Temperature/K''.
-
-\section*{Research Plan}
+\section{Research Plan}
 \subsection{Data Preprocessing}\label{AA}
 The data sets that will be used in this project are the following: AMZN and AAPL news, AMZN and AAPL stock prices, and AMZN and AAPL Tweets. Before extracting features from the text, the data had to be in the correct format. We merged the news data set with the stock data set on the date attribute. The same was done for the Tweets data set with the stock data set. Both data sets include the respective news content and Tweet content related to either AMZN or AAPL. The contents were cleaned to ensure that noise is reduced as much as possible - this includes lemmatizing the text, removing stop words, emoticons, punctuation, hashtags and other miscellaneous text that does not contribute meaning to the content. This also allows feature generation to be simpler and consistent. Each data set had the following attributes: 
 \begin{itemize}
@@ -231,12 +79,11 @@ There are a few methods that were used to generate features from the text.
     \item Sentiment Analysis
 \end{itemize}
 
-Word2Vec is a two-layer neural network that creates word vectors which can be used as features in natural language processing tasks. It takes the text data and learns vector representations of words. We can then calculate the distance between the word vectors using different distance measures such as the cosine similarity measure. Ideally, this distance should be small between words that are similar and larger for words that aren't as similar. (https://wiki.pathmind.com/word2vec)
+Word2Vec is a two-layer neural network that creates word vectors which can be used as features in natural language processing tasks. It takes the text data and learns vector representations of words \cite{b3}. We can then calculate the distance between the word vectors using different distance measures such as the cosine similarity measure. Ideally, this distance should be small between words that are similar and larger for words that aren't as similar. 
 
-BERT provides a similar output to Word2Vec but takes a more complex, modern approach than Word2Vec. BERT, created by Google's NLP team, takes into account the bidirectional context of the tokens in a sentence during the training phase. It already comes pre-trained with a corpus of over 2.5 billion words. On a technical level, the BERT architecture is built on top a transformer. The exploration of BERT in this project is to see if these features provide better classification accuracy than the use of Word2Vec. (https://www.analyticsvidhya.com/blog/2021/06/why-and-how-to-use-bert-for-nlp-text-classification/)
-(https://www.analyticsvidhya.com/blog/2019/09/demystifying-bert-groundbreaking-nlp-framework/)
+BERT provides a similar output to Word2Vec but takes a more complex, modern approach than Word2Vec. BERT, created by Google's NLP team, takes into account the bidirectional context of the tokens in a sentence during the training phase. It already comes pre-trained with a corpus of over 2.5 billion words \cite{b13}. On a technical level, the BERT architecture is built on top a transformer \cite{b11}. The exploration of BERT in this project is to see if these features provide better classification accuracy than the use of Word2Vec. 
 
-Sentiment analysis is used to determine the overall opinion or feeling - positive, neutral, negative - of a document. There are many pre-trained models and packages to use for sentiment analysis such as NLTK, TextBlob, and Gensim. For the purpose of this project, we will be using NLTK. We will be splitting each document by sentence, and get a sentiment score for that sentence. Once the end of the document is reached, we will take the average of the sentiment scores and assign it to the document. This score will be used in conjunction with both WordVec and BERT for feature generation. (https://www.lexalytics.com/technology/sentiment-analysis)
+Sentiment analysis is used to determine the overall opinion or feeling - positive, neutral, negative - of a document \cite{b8}. There are many pre-trained models and packages to use for sentiment analysis such as NLTK, TextBlob, and Gensim. For the purpose of this project, we will be using NLTK. We will be splitting each document by sentence, and get a sentiment score for that sentence. Once the end of the document is reached, we will take the average of the sentiment scores and assign it to the document. This score will be used in conjunction with both WordVec and BERT for feature generation. 
 
 \subsection{Classification Models}
 There are a few models that will be used for the project. We will run both news and Twitter data sets on the models.
@@ -246,12 +93,11 @@ There are a few models that will be used for the project. We will run both news 
     \item Topic Modeling
 \end{itemize}
 
-Logistic Regression is a supervised learning algorithm that is commonly used for binary classification tasks. The algorithm uses the logistic function which is shaped like an 'S' curve which is modeled after population growth, with the minimum and maximum of the function being 0 and 1 respectively. It predicts the probability that the data sample belongs to the default class, hence the range of the function. Although the model is built off of the logistic function, it is still a linear combination of the dependent variables. Logistic regression is traditionally known to be a linear classifier, so it will be worth exploring this classifier to see if either of the data sets could be linearly separable. (https://machinelearningmastery.com/logistic-regression-for-machine-learning/)
+Logistic Regression is a supervised learning algorithm that is commonly used for binary classification tasks. The algorithm uses the logistic function which is shaped like an 'S' curve which is modeled after population growth, with the minimum and maximum of the function being 0 and 1 respectively. It predicts the probability that the data sample belongs to the default class, hence the range of the function. Although the model is built off of the logistic function, it is still a linear combination of the dependent variables \cite{b7}. Logistic regression is traditionally known to be a linear classifier, so it will be worth exploring this classifier to see if either of the data sets could be linearly separable. 
 
-LightGBM is a gradient boosted, supervised machine learning framework. It is traditionally used on larger data sets since it supports parallel, distributed learning. At it's core, LightGBM is a decision tree algorithm but what makes it different from other boosting algorithms is that it splits the tree at the leaf whereas others split the tree depth-wise. This makes LightGBM more accurate since it can reduce the loss when growing at the leaf. Another advantage of using LightGBM for larger data sets is that the training time is reduced because LightGBM uses histogram algorithms to place continuous features into buckets, which in turn reduces the memory usage. The downside to this model is that the model can easily be overfit if the number of data samples is not large enough, or if the parameters are not tuned correctly. Since the data sets for this project are fairly large, 475MB and 662MB for the news and Twitter data set respectively, it will be beneficial to experiment with a more complex model than Logistic Regression. 
-(https://www.analyticsvidhya.com/blog/2017/06/which-algorithm-takes-the-crown-light-gbm-vs-xgboost/)
+LightGBM is a gradient boosted, supervised machine learning framework. It is traditionally used on larger data sets since it supports parallel, distributed learning. At it's core, LightGBM is a decision tree algorithm but what makes it different from other boosting algorithms is that it splits the tree at the leaf whereas others split the tree depth-wise. This makes LightGBM more accurate since it can reduce the loss when growing at the leaf. Another advantage of using LightGBM for larger data sets is that the training time is reduced because LightGBM uses histogram algorithms to place continuous features into buckets, which in turn reduces the memory usage. The downside to this model is that the model can easily be overfit if the number of data samples is not large enough, or if the parameters are not tuned correctly \cite{b12}. Since the data sets for this project are fairly large, 475MB and 662MB for the news and Twitter data set respectively, it will be beneficial to experiment with a more complex model than Logistic Regression. 
 
-Topic modeling is an unsupervised machine learning method that groups documents together based on similar topics. Under the hood, topic modeling counts the words in the text corpus and groups similar word patterns together to create topics. Since this is an unsupervised method, no training is required. The output does not satisfy the classification task so more work will need to be done with this method to complete the task. The corpus for this method would remain the same as the firs two methods and each document will be assigned a "dominant" topic once the model is finished running. This dominant topic also has key phrases associated with it, so essentially each document will be assigned a dominant topic and key phrases. We will then create features from these key phrases by using Word2Vec or BERT in conjunction with the sentiment score. Once we have these features, we will train a a Logistic Regression model and run the classification this way. This is a different approach that has not been done yet in previous classes and uses an ensemble method to perform the classification task. (https://monkeylearn.com/blog/introduction-to-topic-modeling/)
+Topic modeling is an unsupervised machine learning method that groups documents together based on similar topics. Under the hood, topic modeling counts the words in the text corpus and groups similar word patterns together to create topics \cite{b5}. Since this is an unsupervised method, no training is required. The output does not satisfy the classification task so more work will need to be done with this method to complete the task. The corpus for this method would remain the same as the firs two methods and each document will be assigned a "dominant" topic once the model is finished running. This dominant topic also has key phrases associated with it, so essentially each document will be assigned a dominant topic and key phrases. We will then create features from these key phrases by using Word2Vec or BERT in conjunction with the sentiment score. Once we have these features, we will train a a Logistic Regression model and run the classification this way. This is a different approach that has not been done yet in previous classes and uses an ensemble method to perform the classification task.
 
 
 \section*{Timeline and Task Division}
@@ -273,12 +119,19 @@ Deliverable: Dashboard & Team & 3/21/2022 \\
 \section*{Evaluation}
 
 \begin{thebibliography}{00}
-\bibitem{b1} G. Eason, B. Noble, and I. N. Sneddon, ``On certain integrals of Lipschitz-Hankel type involving products of Bessel functions,'' Phil. Trans. Roy. Soc. London, vol. A247, pp. 529--551, April 1955.
-\bibitem{b2} J. Clerk Maxwell, A Treatise on Electricity and Magnetism, 3rd ed., vol. 2. Oxford: Clarendon, 1892, pp.68--73.
-\bibitem{b3} I. S. Jacobs and C. P. Bean, ``Fine particles, thin films and exchange anisotropy,'' in Magnetism, vol. III, G. T. Rado and H. Suhl, Eds. New York: Academic, 1963, pp. 271--350.
-\bibitem{b4} K. Elissa, ``Title of paper if known,'' unpublished.
-\bibitem{b5} R. Nicole, ``Title of paper with only first word capitalized,'' J. Name Stand. Abbrev., in press.
-\bibitem{b6} Y. Yorozu, M. Hirano, K. Oka, and Y. Tagawa, ``Electron spectroscopy studies on magneto-optical media and plastic substrate interface,'' IEEE Transl. J. Magn. Japan, vol. 2, pp. 740--741, August 1987 [Digests 9th Annual Conf. Magnetics Japan, p. 301, 1982].
-\bibitem{b7} M. Young, The Technical Writer's Handbook. Mill Valley, CA: University Science, 1989.
+\bibitem{b1} A. Mittal and A. Goel, “Stock Prediction Using Twitter Sentiment Analysis,” Stanford, 2011. [Online]. Available: https://cs229.stanford.edu/proj2011/GoelMittal-StockMarketPredictionUsingTwitterSentimentAnalysis.pdf. [Accessed: 01-Mar-2022]. 
+\bibitem{b2} A. O'Shea and C. Davis, “What is the stock market and how does it work?,” NerdWallet, 07-Jan-2022. [Online]. Available: https://www.nerdwallet.com/article/investing/what-is-the-stock-market. [Accessed: 01-Mar-2022]. 
+\bibitem{b3} C. Nicholson, “A beginner's guide to word2vec and neural word embeddings,” Pathmind, 2020. [Online]. Available: https://wiki.pathmind.com/word2vec. [Accessed: 01-Mar-2022]. 
+\bibitem{b4} E. Stewart, “Elon Musk's (probably serious) proposal to take Tesla private and the fallout, explained,” Vox, 15-Aug-2018. [Online]. Available: https://www.vox.com/2018/8/15/17692582/elon-musk-tesla-stock-sec-investigation-nasdaq. [Accessed: 01-Mar-2022]. 
+\bibitem{b5} F. Pascual, “Topic Modeling: An Introduction,” Monkey Learn, 26-Sep-2019. . 
+\bibitem{b6} G. Muraski, “How a company's tweets impact its stock prices - temporarily and permanently,” Robert H. Smith School of Business, 29-Nov-2021. [Online]. Available: https://www.rhsmith.umd.edu/research/how-companys-tweets-impact-its-stock-prices-temporarily-and-permanently. [Accessed: 01-Mar-2022]. 
+\bibitem{b7} J. Brownlee, “Logistic regression for machine learning,” Machine Learning Mastery, 14-Aug-2020. [Online]. Available: https://machinelearningmastery.com/logistic-regression-for-machine-learning/. [Accessed: 01-Mar-2022]. 
+\bibitem{b8} J. Catlin, “Sentiment Analysis explained,” Lexalytics, 2022. [Online]. Available: https://www.lexalytics.com/technology/sentiment-analysis. [Accessed: 01-Mar-2022]. 
+\bibitem{b9} J. Si, A. Mukherjee, B. Liu, Q. Li, H. Li, and X. Deng, “Exploiting Topic based Twitter Sentiment for Stock Prediction,” University of Illinois at Chicago, 2013. [Online]. Available: https://www.cs.uic.edu/~liub/publications/ACL-2013-Jianfeng-stock-short.pdf. [Accessed: 01-Mar-2022]. 
+\bibitem{b10} M. Jermann, Stanford, Palo Alto, California, tech., 2020. 
+\bibitem{b11} M. Rizvi, “What is Bert: Bert for text classification,” Analytics Vidhya, 14-Jun-2020. [Online]. Available: https://www.analyticsvidhya.com/blog/2019/09/demystifying-bert-groundbreaking-nlp-framework/. [Accessed: 01-Mar-2022]. 
+\bibitem{b12} P. K, “Light GBM vs XGBOOST: Which algorithm takes the Crown,” Analytics Vidhya, 27-Mar-2020. [Online]. Available: https://www.analyticsvidhya.com/blog/2017/06/which-algorithm-takes-the-crown-light-gbm-vs-xgboost/. [Accessed: 01-Mar-2022]. 
+\bibitem{b13} S. R. Varsheni, “Why and how to use BERT for NLP Text Classification,” Analytics Vidhya, 29-Jun-2021. [Online]. Available: https://www.analyticsvidhya.com/blog/2021/06/why-and-how-to-use-bert-for-nlp-text-classification/. [Accessed: 01-Mar-2022]. 
+\bibitem{b14} Wei, Feng & Nguyen, Uyen. (2020). Stock Trend Prediction using Financial Market News and BERT. 325-332. 10.5220/0010172103250332. 
 \end{thebibliography}
 \end{document}
