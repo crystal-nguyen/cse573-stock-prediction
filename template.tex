@@ -48,7 +48,7 @@ The stock market allows people to purchase a public company’s stock, which is 
 The dataset we will be using consist of stock quotes for the companies Apple (AAPL) and AMAZON (AMZN) from the years 2017-2019. We will pull this data from csv files that consist of the stock quotes from intervals of every 5 minutes, 15 minutes, 30 minutes, 60 minutes, 4 hours, and 24 hours each corresponding to an individual file. The format of the .csv files contains headers of Date, Time, Open, Close, High, Low, and Volume stock quote values for the intervals specified above. The news articles that we will be using in our algorithms contain about 75,000 articles in .json format which contains: organizations, uuid, thread, url, image, domain rank, country, title, spam score, entities, locations, and organizations. The entities, locations, and organizations include fields with a name and sentiment value that can be used to pin down news articles related to Apple and Amazon.
 For our solutions, we combined both the stock prices and news articles to obtain the relevant prices at the time of publication as well as prices after publication to determine the direction of price travel.
 
-The Twitter data set consists of a join between two separate relations: a Twitter data set found on Kaggle and the historical stock prices ranging from 2017-2019 which was sourced from a Python package, yfinance. The Kaggle data set contains the following columns: tweet ID, writer, post date, body, number of comments, number of retweets, number of likes, ticker symbol. This data set contains miscellaneous columns that will not be used, so we sliced the data set to only contain the columns that we need, which are tweet ID, post date, body, and ticker symbol. We then filtered out this data set to only include the AAPL and AMZN ticker symbol and joined this data set onto the yfinance data set which will give us the stock closing quote for that date for that ticker symbol. The resulting data frame has the following columns: tweet ID, post date, body, ticker symbol, closing price. There are 300,000 rows for this data set.
+The Twitter data set consists of a join between two separate tables: a Twitter data set found on Kaggle and the historical stock prices ranging from 2017-2019 which was sourced from a Python package, yfinance. The Kaggle data set contains the following columns: tweet ID, writer, post date, body, number of comments, number of retweets, number of likes, ticker symbol. This data set contains miscellaneous columns that will not be used, so we spliced the data set to only contain the columns that we need, which are post date, body, and ticker symbol. We then filtered out this data set to only include the AAPL and AMZN ticker symbol and joined this data set onto the yfinance data set which will give us the stock closing quote for that date for that ticker symbol. The resulting data frame has the following columns: post date, body, closing price for that day, and the next day's closing price. There are 1.8 million rows for this data set, but to keep consistency we will be sampling only 80,000 rows. 
 
 \section{Existing Methods and Algorithms}
 The idea to predict stock market patterns and trends using viral tweets and news is not anything innovative or unique as there currently exists various model implementations. Here are some examples in which popular models and methodologies are used to obtain such predictions or other similar predictions.
@@ -105,10 +105,21 @@ LightGBM is a gradient boosted, supervised machine learning framework. It is tra
 
 Topic modeling is an unsupervised machine learning method that groups documents together based on similar topics. Under the hood, topic modeling counts the words in the text corpus and groups similar word patterns together to create topics \cite{b5}. Since this is an unsupervised method, no training is required. The output does not satisfy the classification task so more work will need to be done with this method to complete the task. The corpus for this method would remain the same as the firs two methods and each document will be assigned a "dominant" topic once the model is finished running. This dominant topic also has key phrases associated with it, so essentially each document will be assigned a dominant topic and key phrases. We will then create features from these key phrases by using Word2Vec or BERT in conjunction with the sentiment score. Once we have these features, we will train a a Logistic Regression model and run the classification this way. This is a different approach that has not been done yet in previous classes and uses an ensemble method to perform the classification task.
 
+For this project, the team will be executing three different methods on two different data sets.
+\begin{itemize}
+    \item Method 1: Word2Vec, Sentiment Analysis, Logistic Regression
+    \item Method 2: BERT, Sentiment Analysis, LightGBM
+    \item Method 3: Topic Modeling, Word2Vec, Sentiment Analysis, Logistic Regression
+\end{itemize}
+\subsection{Method 1}
+This method will create features by encoding the text with Word2Vec in combination with sentiment scores. These vectors will then be the input for the logistic regression model. This method will be ran on the news and Twitter data set. 
+\subsection{Method 2}
+This method will create features by encoding the text with BERT in combination with sentiment scores. These vectors will then be the input for the LightGBM model. This method will be ran on the news and Twitter data set. 
+\subsection{Method 3}
+This method will first group documents together if they have similar topics which will be ran by the LDA topic model. The topic model will then generate keywords for these groups and percentage of that document belonging to that group. These keywords will be encoded using Word2Vec. The word vectors in conjunction with sentiment score and the percentage mentioned above will be used as inputs for the logistic regression model.
 
-\section*{Timeline and Task Division}
-
-\begin{table}[htbp]
+\section{Timeline and Task Division}
+\begin{table}[htp]
     \begin{center}
         \begin{tabular}{|l||c|c|} \hline\hline
             Task                                               & Owner         & Deadline  \\ \hline
@@ -125,12 +136,20 @@ Topic modeling is an unsupervised machine learning method that groups documents 
     \end{center}
 \end{table}
 
-\section*{Evaluation}
-To evaluate the performance of our machine learning models, we will split our datasets 80\%-20\% as training data and test data, respectively. For each method, we will use the F1 scores of both sets to compare the performance between models. The F1 score can be calculated as follows:
+\section{Evaluation}
+To evaluate the performance of our machine learning models, we will split our data sets 80\%-20\% as training data and test data, respectively. We will run each method on the news data set and the Twitter data set and see how these two text mediums compare when predicting stock direction. Running all three methods will also allow us to compare how different models perform. 
+
+The metrics we will be using are the F1 score and accuracy. The F1 score can be calculated as follows:
 \begin{equation*}
  \frac{tp}{tp+\frac{1}{2}(fp+fn)}
 \end{equation*}
-where $tp$ is the number of true positives, $fn$ is the number of false negatives, and $fp$ is the number of false positives.
+The accuracy can be calculated as follows:
+\begin{equation*}
+ \frac{tp + tn}{tp + fp + tn + fn}
+\end{equation*}
+where $tp$ is the number of true positives, $fn$ is the number of false negatives, $tn$ is the number of true negatives, and $fp$ is the number of false positives. 
+
+Both accuracy and F1 scores are typically used for classification problems. The F1 score is better at taking the distribution of the data into consideration which could be better at measuring performance of data that is heavily imbalanced. On the other hand, accuracy is intuitively easier to understand and performs well when the data is balanced. Since we do not know how the data is distributed yet, we will be reporting both metrics. 
 \begin{thebibliography}{00}
     \bibitem{b1} A. Mittal and A. Goel, “Stock Prediction Using Twitter Sentiment Analysis,” Stanford, 2011. [Online]. Available: https://cs229.stanford.edu/proj2011/GoelMittal-StockMarketPredictionUsingTwitterSentimentAnalysis.pdf. [Accessed: 01-Mar-2022].
     \bibitem{b2} A. O'Shea and C. Davis, “What is the stock market and how does it work?,” NerdWallet, 07-Jan-2022. [Online]. Available: https://www.nerdwallet.com/article/investing/what-is-the-stock-market. [Accessed: 01-Mar-2022].
