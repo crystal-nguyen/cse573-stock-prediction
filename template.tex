@@ -56,7 +56,7 @@ In \cite{b10}, the individual utilizes a Naive Bayes model on a set of verified 
 
 The authors in \cite{b1} utilize a logistic regression model on twitter content feeds and DJIA stock values from June 2009 to December 2009 to predict stock movement of DJIA. Their model was able to achieve an accuracy of 60\%.
 
-A Continuous DPM Model was utilized by the individuals in \cite{b9} to predict the S&P100 index stock movement using tweets involving the symbols of the S&P100 stocks. The model was able to achieve an accuracy of 60\% on average.
+A Continuous DPM Model was utilized by the individuals in \cite{b9} to predict the S\&P100 index stock movement using tweets involving the symbols of the S\&P100 stocks. The model was able to achieve an accuracy of 60\% on average.
 
 In \cite{b14}, the authors attempted to predict the stock price direction by compiling a data set that comprises news related to that stock’s name and the stock’s closing price following that news and feeding it to a BERT model. The model was able to achieve an accuracy of 58\%.
 
@@ -121,7 +121,11 @@ Topic modeling is an unsupervised machine learning method that groups documents 
 \end{table}
 
 \section*{Evaluation}
-
+To evaluate the performance of our machine learning models, we will split our datasets 80\%-20\% as training data and test data, respectively. For each method, we will use the F1 scores of both sets to compare the performance between models. The F1 score can be calculated as follows:
+\begin{equation*}
+ \frac{tp}{tp+\frac{1}{2}(fp+fn)}
+\end{equation*}
+where $tp$ is the number of true positives, $fn$ is the number of false negatives, and $fp$ is the number of false positives.
 \begin{thebibliography}{00}
     \bibitem{b1} A. Mittal and A. Goel, “Stock Prediction Using Twitter Sentiment Analysis,” Stanford, 2011. [Online]. Available: https://cs229.stanford.edu/proj2011/GoelMittal-StockMarketPredictionUsingTwitterSentimentAnalysis.pdf. [Accessed: 01-Mar-2022].
     \bibitem{b2} A. O'Shea and C. Davis, “What is the stock market and how does it work?,” NerdWallet, 07-Jan-2022. [Online]. Available: https://www.nerdwallet.com/article/investing/what-is-the-stock-market. [Accessed: 01-Mar-2022].
@@ -136,6 +140,6 @@ Topic modeling is an unsupervised machine learning method that groups documents 
     \bibitem{b11} M. Rizvi, “What is Bert: Bert for text classification,” Analytics Vidhya, 14-Jun-2020. [Online]. Available: https://www.analyticsvidhya.com/blog/2019/09/demystifying-bert-groundbreaking-nlp-framework/. [Accessed: 01-Mar-2022].
     \bibitem{b12} P. K, “Light GBM vs XGBOOST: Which algorithm takes the Crown,” Analytics Vidhya, 27-Mar-2020. [Online]. Available: https://www.analyticsvidhya.com/blog/2017/06/which-algorithm-takes-the-crown-light-gbm-vs-xgboost/. [Accessed: 01-Mar-2022].
     \bibitem{b13} S. R. Varsheni, “Why and how to use BERT for NLP Text Classification,” Analytics Vidhya, 29-Jun-2021. [Online]. Available: https://www.analyticsvidhya.com/blog/2021/06/why-and-how-to-use-bert-for-nlp-text-classification/. [Accessed: 01-Mar-2022].
-    \bibitem{b14} Wei, Feng & Nguyen, Uyen. (2020). Stock Trend Prediction using Financial Market News and BERT. 325-332. 10.5220/0010172103250332.
+    \bibitem{b14} Wei, Feng \& Nguyen, Uyen. (2020). Stock Trend Prediction using Financial Market News and BERT. 325-332. 10.5220/0010172103250332.
 \end{thebibliography}
 \end{document}
