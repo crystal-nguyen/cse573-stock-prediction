@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Directional Stock Predict Based on Tweets and News Articles</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
-    <link rel="stylesheet" href="tweet.css">
   </head>
   <body>
   	<div class="container is-max-widescreen">
@@ -15,18 +14,22 @@
 
 			  <h2 class="title p-4">Enter a tweet to predict the direction of the stock</h2>
 			  <div class="columns">
-				  <div class="column">
-				  	<input id="tweetText" class="input is-info is-medium is-rounded" type="text" placeholder="I haven't had an egg shell drop into my eggs since I was 14">
-				  </div class="column">
-			  </div>
-			  <div class="pt-4">
+			  <div class="column">
+			  	<input id="tweetText" class="input is-info is-medium is-rounded" type="text" placeholder="https://twitter.com/elonmusk/status/1026872652290379776">
+			  </div class="column">
+			  <div class="column pt-4">
 				  <button id="getTweetButton" class="p-4 button is-primary is-medium is-fullwidth is-outlined is-rounded">
 				  	Predict Stock Direction
 				  </button>
 			  </div>
 			  <!-- Tweet Embedded -->
 			<div >
-				<div id="tweetResult"></div>
+				<h2 class="subtitle p-4">Tweet</h2>
+				<div class="columns">
+					<div id="tweetResult">
+						<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Am considering taking Tesla private at $420. Funding secured.</p>&mdash; Elon Musk (@elonmusk) <a href="https://twitter.com/elonmusk/status/1026872652290379776?ref_src=twsrc%5Etfw">August 7, 2018</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+					</div>
+				</div>
 		  	</div>
 
 
