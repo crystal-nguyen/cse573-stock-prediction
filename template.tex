@@ -1,0 +1,186 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+% The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
+\usepackage{cite}
+\usepackage{tabularx}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+\begin{document}
+
+
+\title{%
+  Directional Stock Prediction Using Viral Tweets and News References 
+\\[.3in]
+  \large Project Proposal \\
+CSE 573 - Spring 2022 \\ 
+Arizona State University \\
+}
+
+
+\author{\IEEEauthorblockN{Hadi Mazboudi}
+    \IEEEauthorblockA{hmazboud@asu.edu}
+    \IEEEauthorblockA{SCAI}
+    \and
+    \IEEEauthorblockN{Brian Nguyen}
+    \IEEEauthorblockA{bnguye23@asu.edu}
+    \IEEEauthorblockA{SCAI}
+    \and
+    \IEEEauthorblockN{Joseph Dicke}
+    \IEEEauthorblockA{jdicke@asu.edu}
+    \IEEEauthorblockA{SCAI}
+    \and
+    \IEEEauthorblockN{Crystal Nguyen}
+    \IEEEauthorblockA{cnguye30@asu.edu}
+    \IEEEauthorblockA{SCAI}
+    \and
+    \IEEEauthorblockN{Rushil Popat}
+    \IEEEauthorblockA{rushil@asu.edu}
+    \IEEEauthorblockA{SCAI}
+
+}
+
+
+
+
+\maketitle
+
+\begin{abstract}
+    There is an incredible financial incentive to “solving” the problem of optimizing trading in the stock market. Many ideas have been tried and tested to varying degrees of success, basing their trading strategies on either mathematical models, ideas of momentum of the stock, volume, and other more advanced concepts as well. In this paper, we will discuss the development of several different trading strategies using modern machine learning and natural language processing. In this experiment, we will be applying our methodologies to the stocks AMZN and AAPL. Our data set includes over 100,000 news articles and tweets related to these tickers and market data for both stocks at the closing time between November 2017 and February 2019, which is the time interval we will be using to develop our trading strategies. In this paper, we will discuss the development of our strategies, which will be a combination of word encoders (Word2Vec, BERT, and Topic Modeling), sentiment analysis, and machine learning models (logistic regression and LightGBM). In this paper, we will outline our research plan, evaluation metrics, and timeline for the completion of the experiment.
+\end{abstract}
+
+\begin{IEEEkeywords}
+    Natural language processing, BERT, Word2Vec, Topic Modeling, classification, Tweets, stocks
+\end{IEEEkeywords}
+
+\section{Introduction}
+The stock market allows people to purchase a public company’s stock, which is a small piece of that company \cite{b2}. Oftentimes, people purchase stocks in order to invest their money rather than putting their money in a savings account at a bank. Before online news articles and social media companies like Twitter, the stock market wouldn’t fluctuate as fast due to breaking news on a specific company. Lately, the United States has seen that news articles and tweets, from the renowned company, Twitter have begun to have an effect on the price of a certain company. Most companies also have social media platforms like Twitter and people that invest in these companies can infer things from sentiment and subject matter of the tweets coming from companies \cite{b6}. A notable example is one when Elon Musk tweeted about thinking about taking Tesla private at \$420 and that he had funding. After this the stock price increased dramatically \cite{b4}. One single person cannot keep up with the constant bombardment of information coming out on news articles and Twitter so our idea is to use this plentiful information and build models that can help predict stock price movement. We plan to use textual information by performing Natural Language Processing techniques like BERT and sentiment analysis and much more on the data sets soon to be described and use it to train our models and be able to predict stock directions in the stock market.
+
+\section{Data sets}
+The dataset we will be using consist of stock quotes for the companies Apple (AAPL) and AMAZON (AMZN) from the years 2017-2019. We will pull this data from csv files that consist of the stock quotes from intervals of every 5 minutes, 15 minutes, 30 minutes, 60 minutes, 4 hours, and 24 hours each corresponding to an individual file. The format of the .csv files contains headers of Date, Time, Open, Close, High, Low, and Volume stock quote values for the intervals specified above. The news articles that we will be using in our algorithms contain about 75,000 articles in .json format which contains: organizations, uuid, thread, url, image, domain rank, country, title, spam score, entities, locations, and organizations. The entities, locations, and organizations include fields with a name and sentiment value that can be used to pin down news articles related to Apple and Amazon.
+For our solutions, we combined both the stock prices and news articles to obtain the relevant prices at the time of publication as well as prices after publication to determine the direction of price travel.
+
+The Twitter data set consists of a join between two separate tables: a Twitter data set found on Kaggle and the historical stock prices ranging from 2017-2019 which was sourced from a Python package, yfinance. The Kaggle data set contains the following columns: tweet ID, writer, post date, body, number of comments, number of retweets, number of likes, ticker symbol. This data set contains miscellaneous columns that will not be used, so we spliced the data set to only contain the columns that we need, which are post date, body, and ticker symbol. We then filtered out this data set to only include the AAPL and AMZN ticker symbol and joined this data set onto the yfinance data set which will give us the stock closing quote for that date for that ticker symbol. The resulting data frame has the following columns: post date, body, closing price for that day, and the next day's closing price. There are 1.8 million rows for this data set, but to keep consistency we will be sampling only 80,000 rows. 
+
+\section{Existing Methods and Algorithms}
+The idea to predict stock market patterns and trends using viral tweets and news is not anything innovative or unique as there currently exists various model implementations. Here are some examples in which popular models and methodologies are used to obtain such predictions or other similar predictions.
+In \cite{b10}, the individual utilizes a Naive Bayes model on a set of verified tweet contents from publicly traded corporations executives and half-hourly stock data to predict stock movement of all NASDAQ and NYSE companies during that time of collection. The individual’s model was able to achieve an accuracy of 52\%.
+
+The authors in \cite{b1} utilize a logistic regression model on twitter content feeds and DJIA stock values from June 2009 to December 2009 to predict stock movement of DJIA. Their model was able to achieve an accuracy of 60\%.
+
+A Continuous DPM Model was utilized by the individuals in \cite{b9} to predict the S\&P100 index stock movement using tweets involving the symbols of the S\&P100 stocks. The model was able to achieve an accuracy of 60\% on average.
+
+In \cite{b15}, the authors attempted to predict the stock price direction by compiling a data set that comprises news related to that stock’s name and the stock’s closing price following that news and feeding it to a BERT model. The model was able to achieve an accuracy of 58\%.
+
+The user from this study \cite{b14} was able to highlight the performance of a Support Vector Machine as the user implemented the SVM with the goal of predicting the price direction of the daily closing price of S\&P BSE Teck index. The result was an average prediction accuracy of 60.2\%. 
+
+
+\section{Research Plan}
+\subsection{Data Preprocessing}\label{AA}
+The data sets that will be used in this project are the following: AMZN and AAPL news, AMZN and AAPL stock prices, and AMZN and AAPL Tweets. Before extracting features from the text, the data had to be in the correct format. We merged the news data set with the stock data set on the date attribute. The same was done for the Tweets data set with the stock data set. Both data sets include the respective news content and Tweet content related to either AMZN or AAPL. The contents were cleaned to ensure that noise is reduced as much as possible - this includes lemmatizing the text, removing stop words, emoticons, punctuation, hashtags and other miscellaneous text that does not contribute meaning to the content. This also allows feature generation to be simpler and consistent. Each data set had the following attributes:
+\begin{itemize}
+    \item Standardized date and time
+    \item Content (body of the news article or Tweet)
+    \item Stock open amount
+    \item Stock close amount
+    \item Stock high amount
+    \item Stock low amount
+    \item Stock direction (label)
+\end{itemize}
+To generate the labels, we used the stock price at that time and date to determine whether or not the direction of the price was going up (1) or down (0).
+
+\subsection{Feature Generation}
+There are a few methods that were used to generate features from the text.
+\begin{itemize}
+    \item Word2Vec
+    \item BERT
+    \item Sentiment Analysis
+\end{itemize}
+
+Word2Vec is a two-layer neural network that creates word vectors which can be used as features in natural language processing tasks. It takes the text data and learns vector representations of words \cite{b3}. We can then calculate the distance between the word vectors using different distance measures such as the cosine similarity measure. Ideally, this distance should be small between words that are similar and larger for words that aren't as similar.
+
+BERT provides a similar output to Word2Vec but takes a more complex, modern approach than Word2Vec. BERT, created by Google's NLP team, takes into account the bidirectional context of the tokens in a sentence during the training phase. It already comes pre-trained with a corpus of over 2.5 billion words \cite{b13}. On a technical level, the BERT architecture is built on top a transformer \cite{b11}. The exploration of BERT in this project is to see if these features provide better classification accuracy than the use of Word2Vec.
+
+Sentiment analysis is used to determine the overall opinion or feeling - positive, neutral, negative - of a document \cite{b8}. There are many pre-trained models and packages to use for sentiment analysis such as NLTK, TextBlob, and Gensim. For the purpose of this project, we will be using NLTK. We will be splitting each document by sentence, and get a sentiment score for that sentence. Once the end of the document is reached, we will take the average of the sentiment scores and assign it to the document. This score will be used in conjunction with both WordVec and BERT for feature generation.
+
+\subsection{Classification Models}
+There are a few models that will be used for the project. We will run both news and Twitter data sets on the models.
+\begin{itemize}
+    \item Logistic Regression
+    \item LightGBM
+    \item Topic Modeling
+\end{itemize}
+
+Logistic Regression is a supervised learning algorithm that is commonly used for binary classification tasks. The algorithm uses the logistic function which is shaped like an 'S' curve which is modeled after population growth, with the minimum and maximum of the function being 0 and 1 respectively. It predicts the probability that the data sample belongs to the default class, hence the range of the function. Although the model is built off of the logistic function, it is still a linear combination of the dependent variables \cite{b7}. Logistic regression is traditionally known to be a linear classifier, so it will be worth exploring this classifier to see if either of the data sets could be linearly separable.
+
+LightGBM is a gradient boosted, supervised machine learning framework. It is traditionally used on larger data sets since it supports parallel, distributed learning. At it's core, LightGBM is a decision tree algorithm but what makes it different from other boosting algorithms is that it splits the tree at the leaf whereas others split the tree depth-wise. This makes LightGBM more accurate since it can reduce the loss when growing at the leaf. Another advantage of using LightGBM for larger data sets is that the training time is reduced because LightGBM uses histogram algorithms to place continuous features into buckets, which in turn reduces the memory usage. The downside to this model is that the model can easily be overfit if the number of data samples is not large enough, or if the parameters are not tuned correctly \cite{b12}. Since the data sets for this project are fairly large, 475MB and 662MB for the news and Twitter data set respectively, it will be beneficial to experiment with a more complex model than Logistic Regression.
+
+Topic modeling is an unsupervised machine learning method that groups documents together based on similar topics. Under the hood, topic modeling counts the words in the text corpus and groups similar word patterns together to create topics \cite{b5}. Since this is an unsupervised method, no training is required. The output does not satisfy the classification task so more work will need to be done with this method to complete the task. The corpus for this method would remain the same as the firs two methods and each document will be assigned a "dominant" topic once the model is finished running. This dominant topic also has key phrases associated with it, so essentially each document will be assigned a dominant topic and key phrases. We will then create features from these key phrases by using Word2Vec or BERT in conjunction with the sentiment score. Once we have these features, we will train a a Logistic Regression model and run the classification this way. This is a different approach that has not been done yet in previous classes and uses an ensemble method to perform the classification task.
+
+For this project, the team will be executing three different methods on two different data sets.
+\begin{itemize}
+    \item Method 1: Word2Vec, Sentiment Analysis, Logistic Regression
+    \item Method 2: BERT, Sentiment Analysis, LightGBM
+    \item Method 3: Topic Modeling, Word2Vec, Sentiment Analysis, Logistic Regression
+\end{itemize}
+\subsection{Method 1}
+This method will create features by encoding the text with Word2Vec in combination with sentiment scores. These vectors will then be the input for the logistic regression model. This method will be ran on the news and Twitter data set. 
+\subsection{Method 2}
+This method will create features by encoding the text with BERT in combination with sentiment scores. These vectors will then be the input for the LightGBM model. This method will be ran on the news and Twitter data set. 
+\subsection{Method 3}
+This method will first group documents together if they have similar topics which will be ran by the LDA topic model. The topic model will then generate keywords for these groups and percentage of that document belonging to that group. These keywords will be encoded using Word2Vec. The word vectors in conjunction with sentiment score and the percentage mentioned above will be used as inputs for the logistic regression model.
+
+\section{Timeline and Task Division}
+\begin{table}[htp]
+    \begin{center}
+        \begin{tabular}{|l||c|c|} \hline\hline
+            Task                                               & Owner         & Deadline  \\ \hline
+            Merging news and stock data set                    & Rushil        & 2/18/22   \\
+            Data preprocessing, splitting training/testing & Crystal       & 2/25/22   \\
+            M1: Word2Vec, sentiment, LR                  & Brian, Joseph & 3/18/22   \\
+            M2: BERT, sentiment, LightGBM                & Hadi, Rushil  & 3/18/22   \\
+            M3: Topic model, sentiment, Word2Vec, LR     & Crystal       & 3/18/22 \\
+            Deliverable: Dashboard                             & Team          & 3/21/22 \\
+            Prepare presentation slides                             & Team          & 3/22/22 \\
+            Complete Final Report                             & Team          & 4/27/22 \\
+            \hline\hline
+        \end{tabular}
+    \end{center}
+\end{table}
+
+\section{Evaluation}
+To evaluate the performance of our machine learning models, we will split our data sets 80\%-20\% as training data and test data, respectively. We will run each method on the news data set and the Twitter data set and see how these two text mediums compare when predicting stock direction. Running all three methods will also allow us to compare how different models perform. 
+
+The metrics we will be using are the F1 score and accuracy. The F1 score can be calculated as follows:
+\begin{equation*}
+ \frac{tp}{tp+\frac{1}{2}(fp+fn)}
+\end{equation*}
+The accuracy can be calculated as follows:
+\begin{equation*}
+ \frac{tp + tn}{tp + fp + tn + fn}
+\end{equation*}
+where $tp$ is the number of true positives, $fn$ is the number of false negatives, $tn$ is the number of true negatives, and $fp$ is the number of false positives. 
+
+Both accuracy and F1 scores are typically used for classification problems. The F1 score is better at taking the distribution of the data into consideration which could be better at measuring performance of data that is heavily imbalanced. On the other hand, accuracy is intuitively easier to understand and performs well when the data is balanced. Since we do not know how the data is distributed yet, we will be reporting both metrics. 
+\begin{thebibliography}{00}
+    \bibitem{b1} A. Mittal and A. Goel, “Stock Prediction Using Twitter Sentiment Analysis,” Stanford, 2011. [Online]. Available: https://cs229.stanford.edu/proj2011/GoelMittal-StockMarketPredictionUsingTwitterSentimentAnalysis.pdf. [Accessed: 01-Mar-2022].
+    \bibitem{b2} A. O'Shea and C. Davis, “What is the stock market and how does it work?,” NerdWallet, 07-Jan-2022. [Online]. Available: https://www.nerdwallet.com/article/investing/what-is-the-stock-market. [Accessed: 01-Mar-2022].
+    \bibitem{b3} C. Nicholson, “A beginner's guide to word2vec and neural word embeddings,” Pathmind, 2020. [Online]. Available: https://wiki.pathmind.com/word2vec. [Accessed: 01-Mar-2022].
+    \bibitem{b4} E. Stewart, “Elon Musk's (probably serious) proposal to take Tesla private and the fallout, explained,” Vox, 15-Aug-2018. [Online]. Available: https://www.vox.com/2018/8/15/17692582/elon-musk-tesla-stock-sec-investigation-nasdaq. [Accessed: 01-Mar-2022].
+    \bibitem{b5} F. Pascual, “Topic Modeling: An Introduction,” Monkey Learn, 26-Sep-2019. .
+    \bibitem{b6} G. Muraski, “How a company's tweets impact its stock prices - temporarily and permanently,” Robert H. Smith School of Business, 29-Nov-2021. [Online]. Available: https://www.rhsmith.umd.edu/research/how-companys-tweets-impact-its-stock-prices-temporarily-and-permanently. [Accessed: 01-Mar-2022].
+    \bibitem{b7} J. Brownlee, “Logistic regression for machine learning,” Machine Learning Mastery, 14-Aug-2020. [Online]. Available: https://machinelearningmastery.com/logistic-regression-for-machine-learning/. [Accessed: 01-Mar-2022].
+    \bibitem{b8} J. Catlin, “Sentiment Analysis explained,” Lexalytics, 2022. [Online]. Available: https://www.lexalytics.com/technology/sentiment-analysis. [Accessed: 01-Mar-2022].
+    \bibitem{b9} J. Si, A. Mukherjee, B. Liu, Q. Li, H. Li, and X. Deng, “Exploiting Topic based Twitter Sentiment for Stock Prediction,” University of Illinois at Chicago, 2013. [Online]. Available: https://www.cs.uic.edu/~liub/publications/ACL-2013-Jianfeng-stock-short.pdf. [Accessed: 01-Mar-2022].
+    \bibitem{b10} M. Jermann, Stanford, Palo Alto, California, tech., 2020.
+    \bibitem{b11} M. Rizvi, “What is Bert: Bert for text classification,” Analytics Vidhya, 14-Jun-2020. [Online]. Available: https://www.analyticsvidhya.com/blog/2019/09/demystifying-bert-groundbreaking-nlp-framework/. [Accessed: 01-Mar-2022].
+    \bibitem{b12} P. K, “Light GBM vs XGBOOST: Which algorithm takes the Crown,” Analytics Vidhya, 27-Mar-2020. [Online]. Available: https://www.analyticsvidhya.com/blog/2017/06/which-algorithm-takes-the-crown-light-gbm-vs-xgboost/. [Accessed: 01-Mar-2022].
+    \bibitem{b13} S. R. Varsheni, “Why and how to use BERT for NLP Text Classification,” Analytics Vidhya, 29-Jun-2021. [Online]. Available: https://www.analyticsvidhya.com/blog/2021/06/why-and-how-to-use-bert-for-nlp-text-classification/. [Accessed: 01-Mar-2022].
+    \bibitem{b14} T. Naliniprava, "Stock Price Prediction Using Support Vector Machine Approach," International Academic Conference on Management and Economics, 2019. [Online]. Available: https://www.dpublication.com/wp-content/uploads/2019/11/24-ME.pdf. [Accessed: 01-Mar-2022].
+    \bibitem{b15} Wei, Feng \& Nguyen, Uyen. (2020). Stock Trend Prediction using Financial Market News and BERT. 325-332. 10.5220/0010172103250332.
+\end{thebibliography}
+\end{document}

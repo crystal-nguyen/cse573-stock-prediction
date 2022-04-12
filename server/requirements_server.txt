@@ -1,5 +1,8 @@
+twint
+requests
+flask
+selenium
+chromedriver
 wheel
 pillow
-flask
-requests
 # tokenizers==0.6.0
