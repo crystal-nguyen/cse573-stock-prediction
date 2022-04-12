@@ -3,9 +3,6 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="twitter:widgets:theme" content="dark">
-	<meta name="twitter:widgets:link-color" content="#555fff">
-	<meta name="twitter:widgets:border-color" content="#22eeff">
     <title>Directional Stock Predict Based on Tweets and News Articles</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <link rel="stylesheet" href="tweet.css">
@@ -18,27 +15,21 @@
 
 			  <h2 class="title p-4">Enter a tweet to predict the direction of the stock</h2>
 			  <div class="columns">
-			  <div class="column">
-			  	<input id="tweetText" class="input is-info is-medium is-rounded" type="text" placeholder="I haven't had an egg shell drop into my eggs since I was 14">
-			  </div class="column">
-			  <div class="column pt-4">
-				  <button id="getTweetButton" class="p-4 button is-primary is-medium is-fullwidth is-outlined is-rounded">
-				  	Get Tweet
-				  </button>
+				  <div class="column">
+				  	<input id="tweetText" class="input is-info is-medium is-rounded" type="text" placeholder="I haven't had an egg shell drop into my eggs since I was 14">
+				  </div class="column">
 			  </div>
-			  </div>
-
-			  <!-- Tweet Embedded -->
-			<div >
-				<h2 class="subtitle p-4">Tweet</h2>
-				<div id="tweetResult"></div>
-		  	</div>
-
 			  <div class="pt-4">
-				  <button id="predictButton" class="p-4 button is-primary is-medium is-fullwidth is-outlined is-rounded">
+				  <button id="getTweetButton" class="p-4 button is-primary is-medium is-fullwidth is-outlined is-rounded">
 				  	Predict Stock Direction
 				  </button>
 			  </div>
+			  <!-- Tweet Embedded -->
+			<div >
+				<div id="tweetResult"></div>
+		  	</div>
+
+
 			  <div >
 			  	<h2 class="subtitle p-4">Prediction</h2>
 				<div class="columns">

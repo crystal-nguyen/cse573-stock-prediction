@@ -43,22 +43,6 @@ class server():
             response = {"result": f"{embed}"}
             response = json.dumps(response)
             return Response(response=response, status=200, mimetype="application/json")
-        
-    def get_tweets(self):
-        if request.method == "POST":
-            data = request.get_json(force=True)
-            tweetURL = data["tweetURL"]
-            options = Options()
-            options.headless = True
-            CHROMEDRIVER_PATH = "/usr/lib/chromium-browser/chromedriver"
-            driver = webdriver.Chrome(CHROMEDRIVER_PATH, options=options)
-            driver.get('https://publish.twitter.com/?query=' + tweetURL)
-            soup = BeautifulSoup(driver.page_source, "lxml")
-            item = soup.find('code', attrs={"class":"EmbedCode-code"})
-            embed = item.contents[0]
-            response = {"result": f"{embed}"}
-            response = json.dumps(response)
-            return Response(response=response, status=200, mimetype="application/json")
     
 if __name__ == "__main__":
     server()
