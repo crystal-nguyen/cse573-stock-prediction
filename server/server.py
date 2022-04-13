@@ -107,7 +107,7 @@ class server():
         return prediction
 
 
-    def bert_preprocess(text):
+    def bert_preprocess(self,text):
 
         # lowercase
         text = text.lower()
@@ -141,15 +141,15 @@ class server():
 
         #tokenize text
         tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
-        tokenized = tokenizer(text, padding=True)
+        text = self.bert_preprocess(text)
 
         X = []
-        X.append(sid.polarity_scores(text)['compound'])
         for i in tokenizer(text, padding=True)['input_ids']:
             X.append(i)
         
-        for i in range(154-len(tokenizer(text, padding=True)['input_ids'])):\
+        for i in range(154-len(tokenizer(text, padding=True)['input_ids'])):
             X.append(0)
+        X.append(sid.polarity_scores(text)['compound'])
 
         prediction = model.predict([X])
 
