@@ -26,7 +26,14 @@
 			  </div>
 			  <!-- Tweet Embedded -->
 			<div >
-				<div id="tweetResult"></div>
+				<div class="columns">
+					<div id="tweetResult"></div>
+					<div height="300" width="300">
+						<figure class="image is-256x256">
+							<img id="arrowOverall" style="visibility: hidden" src="./up_arrow.png" height="300" width="300">
+						</figure>
+					</div>
+				</div>
 		  	</div>
 
 
@@ -35,35 +42,74 @@
 				<div class="columns">
 					<div class="column p-128">
 						<figure class="image is-256x256">
-							<img id="up_arrow" class="is-hidden" src="./up_arrow.png">
+							Model 1:
+							<img id="arrow1" style="visibility: hidden" src="./up_arrow.png">
 						</figure>
 					</div>
 					<div class="column p-128">
 						<figure class="image is-256x256">
-							<img id="down_arrow" class="is-hidden" src="./down_arrow.png">
+							Model 2:
+							<img id="arrow2" style="visibility: hidden" src="./up_arrow.png">
+						</figure>
+					</div>
+					<div class="column p-128">
+						<figure class="image is-256x256">
+							Model 3:
+							<img id="arrow3" style="visibility: hidden" src="./up_arrow.png">
 						</figure>
 					</div>
 				</div>
 			  </div>
 
-				<h2 class="subtitle p-4">Graphs of Models</h2>
+				<h2 class="subtitle p-4">Graphs of Models (News)</h2>
 				<div class="columns">
 					<div class="column">
 						<figure class="image is-256x256">
-							<img id="stock" src="./apple.png">
+							<img id="newsM1" src="./method1_news_roc.png">
 						</figure>
 					</div>
 					<div class="column">
 						<figure class="image is-256x256">
-							<img id="stock2" src="./apple.png">
+							<img id="newsM2" src="./apple.png">
 						</figure>
 					</div>
 					<div class="column">
 						<figure class="image is-256x256">
-							<img id="stock3" src="./apple.png">
+							<img id="newsM3" src="./method3_news_roc.png">
 						</figure>
 					</div>
 				</div>
+				<h2 class="subtitle p-4">Graphs of Models (Tweets) </h2>
+				<div class="columns">
+					<div class="column">
+						<figure class="image is-256x256">
+							<img id="tweetM1" src="./method1_tweets_roc.png">
+						</figure>
+					</div>
+					<div class="column">
+						<figure class="image is-256x256">
+							<img id="tweetM2" src="./apple.png">
+						</figure>
+					</div>
+					<div class="column">
+						<figure class="image is-256x256">
+							<img id="tweetM3" src="./method3_tweets_roc.png">
+						</figure>
+					</div>
+				</div>
+
+				<h2 class="subtitle p-4">Stock Graphs</h2>
+				<div class="columns">
+					<div class="column">
+						Apple:
+						<iframe height="512" width="512" src="https://ssltvc.investing.com/?pair_ID=6408&height=512&width=512&interval=300&plotStyle=area&domain_ID=1&lang_ID=1&timezone_ID=3"></iframe>
+					</div>
+					<div class="column">
+						Amazon:
+						<iframe height="512" width="512" src="https://ssltvc.investing.com/?pair_ID=6435&height=512&width=512&interval=300&plotStyle=area&domain_ID=1&lang_ID=1&timezone_ID=3"></iframe>
+					</div>
+				</div>
+
 			</div>
 		  </div>
 	  </section>

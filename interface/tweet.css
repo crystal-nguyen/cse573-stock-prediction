@@ -9,7 +9,7 @@
   border-style: solid;
   border-width: 2px;
   box-shadow: 0 1px 3px rgba(29, 161, 242, 0.15);
-  margin: 25px 100px 25px 300px;
+  margin: 50px 100px 25px 100px;
   padding: 50px 50px 50px 50px;
   max-width: 468px;
   color: white;
@@ -33,3 +33,7 @@
 .twitter-tweet a:focus {
   text-decoration: underline;
 }
+
+h2 {
+  text-align:center
+ }
