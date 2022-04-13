@@ -27,7 +27,8 @@ from transformers import BertTokenizer
 
 
 class server():
-    cwd = os.getcwd()+"/cse573-stock-prediction/server/"
+    cwd = os.getcwd()+"/cse573-stock-prediction/code/server/"
+    cwdM2 = os.getcwd()+"/cse573-stock-prediction/code/method2"
     def __init__(self):
         # initializing flask
         self.app = Flask(__name__)
@@ -269,7 +270,6 @@ class server():
         return str(prediction_3) 
 
 if __name__ == "__main__":
-    
     server()
     
 

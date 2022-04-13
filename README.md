@@ -6,9 +6,10 @@ The following may be necessary if running linux:
 sudo apt-get install texlive-science
 
 ### Necessary Dependencies ###
-1. Flask v2.1.1
-2. Selenium v4.1.3
-3. BeautifulSoup4 v4.11.1
+These are located in the requirements.txt file. To download all required packages, run
+```bash
+pip install -r requirements.txt
+```
 
 ### Running Server ###
 1. Change endpoints in main.js to reflect your ip address:5000
