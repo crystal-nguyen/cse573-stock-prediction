@@ -1,0 +1,8 @@
+twint
+requests
+flask
+selenium
+chromedriver
+wheel
+pillow
+# tokenizers==0.6.0
