@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Directional Stock Predict Based on Tweets and News Articles</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <link rel="stylesheet" href="tweet.css">
+  </head>
+  <body>
+  	<div class="container is-max-widescreen">
+	  <section class="section">
+	  <div class="columns">
+			<div class="column">
+
+			  <h2 class="title p-4">Enter a tweet to predict the direction of the stock</h2>
+			  <div class="columns">
+				  <div class="column">
+				  	<input id="tweetText" class="input is-info is-medium is-rounded" type="text" placeholder="https://twitter.com/elonmusk/status/1026872652290379776">
+				  </div class="column">
+			  </div>
+			  <div class="pt-4">
+				  <button id="getTweetButton" class="p-4 button is-primary is-medium is-fullwidth is-outlined is-rounded">
+				  	Predict Stock Direction
+				  </button>
+			  </div>
+			  <!-- Tweet Embedded -->
+			<div >
+				<div class="columns">
+					<div id="tweetResult"></div>
+					<div height="300" width="300">
+						<figure class="image is-256x256">
+							<img id="arrowOverall" style="visibility: hidden" src="./up_arrow.png" height="300" width="300">
+						</figure>
+					</div>
+				</div>
+		  	</div>
+
+
+			  <div >
+			  	<h2 class="subtitle p-4">Prediction</h2>
+				<div class="columns">
+					<div class="column p-128">
+						<figure class="image is-256x256">
+							Model 1:
+							<img id="arrow1" style="visibility: hidden" src="./up_arrow.png">
+						</figure>
+					</div>
+					<div class="column p-128">
+						<figure class="image is-256x256">
+							Model 2:
+							<img id="arrow2" style="visibility: hidden" src="./up_arrow.png">
+						</figure>
+					</div>
+					<div class="column p-128">
+						<figure class="image is-256x256">
+							Model 3:
+							<img id="arrow3" style="visibility: hidden" src="./up_arrow.png">
+						</figure>
+					</div>
+				</div>
+			  </div>
+
+				<h2 class="subtitle p-4">Graphs of Models (News)</h2>
+				<div class="columns">
+					<div class="column">
+						<figure class="image is-256x256">
+							<img id="newsM1" src="../../evaluation/method1_news_roc.png">
+						</figure>
+					</div>
+					<div class="column">
+						<figure class="image is-256x256">
+							<img id="newsM2" src="../../evaluation/method2_news_roc.png">
+						</figure>
+					</div>
+					<div class="column">
+						<figure class="image is-256x256">
+							<img id="newsM3" src="../../evaluation/method3_news_roc.png">
+						</figure>
+					</div>
+				</div>
+				<h2 class="subtitle p-4">Graphs of Models (Tweets) </h2>
+				<div class="columns">
+					<div class="column">
+						<figure class="image is-256x256">
+							<img id="tweetM1" src="../../evaluation/method1_tweets_roc.png">
+						</figure>
+					</div>
+					<div class="column">
+						<figure class="image is-256x256">
+							<img id="tweetM2" src="../../evaluation/methods2_tweets_roc.png">
+						</figure>
+					</div>
+					<div class="column">
+						<figure class="image is-256x256">
+							<img id="tweetM3" src="../../evaluation/method3_tweets_roc.png">
+						</figure>
+					</div>
+				</div>
+
+				<h2 class="subtitle p-4">Stock Graphs</h2>
+				<div class="columns">
+					<div class="column">
+						Apple:
+						<iframe height="512" width="512" src="https://ssltvc.investing.com/?pair_ID=6408&height=512&width=512&interval=300&plotStyle=area&domain_ID=1&lang_ID=1&timezone_ID=3"></iframe>
+					</div>
+					<div class="column">
+						Amazon:
+						<iframe height="512" width="512" src="https://ssltvc.investing.com/?pair_ID=6435&height=512&width=512&interval=300&plotStyle=area&domain_ID=1&lang_ID=1&timezone_ID=3"></iframe>
+					</div>
+				</div>
+
+			</div>
+		  </div>
+	  </section>
+</div>
+  </body>
+  <script src="./main.js"></script>
+</html>
