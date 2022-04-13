@@ -22,6 +22,7 @@ import os
 import gensim
 from transformers import BertTokenizer
 
+
 # nltk.download('vader_lexicon')
 
 
@@ -103,6 +104,31 @@ class server():
         prediction = model.predict(X_vect_scale)[0]
 
         return prediction
+
+
+    def bert_preprocess(text):
+
+        # lowercase
+        text = text.lower()
+        # remove emojis
+        text = emoji.get_emoji_regexp().sub(u'',text)
+        # remove '\n'
+        text =re.sub('\n',' ',text)
+        # remove links
+        text = re.sub('http\S+', 'LINK',text)
+        # remove hashtags
+        text = re.sub('\B\#\w+','HASHTAG',text)
+        # remove @
+        text = re.sub('\B\@\w+','AMPERSAND',text)
+        # remove $
+        text = re.sub('\B\$\w+','DOLLARSIGN',text)
+        # remove extra whitespace
+        text = re.sub(' +',' ',text)
+        text = text.strip()
+        # remove stop words
+
+        return text
+
 
     def predict_model2(self,text):
         sid = SentimentIntensityAnalyzer()
