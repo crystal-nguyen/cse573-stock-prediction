@@ -17,6 +17,7 @@ import re
 import contractions
 import pickle
 import nltk
+from transformers import BertTokenizer
 nltk.download('vader_lexicon')
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from sklearn.preprocessing import StandardScaler
@@ -103,7 +104,28 @@ class server():
         return prediction
 
     def predict_model2(text):
-        pass
+        sid = SentimentIntensityAnalyzer()
+        
+        #load logistic regression model
+        file = open('bert_logreg.sav','rb')
+        model = pickle.load(file)
+        file.close()
+
+        #tokenize text
+        tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
+        tokenized = tokenizer(text, padding=True)
+
+        X = []
+        X.append(sid.polarity_scores(text)['compound'])
+        for i in tokenizer(text, padding=True)['input_ids']:
+            X.append(i)
+        
+        for i in range(153-len(tokenizer(text, padding=True)['input_ids'])):\
+            X.append(0)
+
+        prediction = model.predict([X])
+
+        return prediction
 
 
     def predict_model3(text):
