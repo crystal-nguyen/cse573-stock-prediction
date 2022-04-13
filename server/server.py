@@ -12,8 +12,6 @@ from selenium.webdriver.chrome.options import Options
 from bs4 import BeautifulSoup
 
 class server():
-    tweetText = ""
-
     def __init__(self):
         # initializing flask
         self.app = Flask(__name__)
@@ -22,10 +20,9 @@ class server():
         
         # adding routes
         self.app.add_url_rule("/predict", view_func=self.predict_inference, methods=["POST"])
-        self.app.add_url_rule("/tweets", view_func=self.get_tweets, methods=["POST"])
+        self.app.add_url_rule("/tweets", view_func=self.predict_inference, methods=["POST"])
         
         # starting flask server
-        ### change self.host ip to localhost ####
         self.host = "192.168.0.199"
         self.app.run(host=self.host)
 
@@ -36,12 +33,8 @@ class server():
             tweetURL = data["tweetURL"]
             options = Options()
             options.headless = True
-
-            ### Change chrome driver path ###
-
-            # Joseph's
-            # CHROMEDRIVER_PATH = "/usr/lib/chromium-browser/chromedriver"
-            # Brian's
+            
+            ### ! change path to match your own path ! ###
             CHROMEDRIVER_PATH = "/opt/homebrew/bin/chromedriver"
 
             driver = webdriver.Chrome(CHROMEDRIVER_PATH, options=options)
@@ -49,30 +42,9 @@ class server():
             soup = BeautifulSoup(driver.page_source, "lxml")
             item = soup.find('code', attrs={"class":"EmbedCode-code"})
             embed = item.contents[0]
-            response = {"result": f"{embed}"}
-            response = json.dumps(response)
-            return Response(response=response, status=200, mimetype="application/json")
-        
-    def get_tweets(self):
-        if request.method == "POST":
-            data = request.get_json(force=True)
-            tweetURL = data["tweetURL"]
-            options = Options()
-            options.headless = True
-
-            ### Change chrome driver path ###
-
-            # Joseph's
-            # CHROMEDRIVER_PATH = "/usr/lib/chromium-browser/chromedriver"
-            # Brian's
-            CHROMEDRIVER_PATH = "/opt/homebrew/bin/chromedriver"
-            driver = webdriver.Chrome(CHROMEDRIVER_PATH, options=options)
-            driver.get('https://publish.twitter.com/?query=' + tweetURL)
-            soup = BeautifulSoup(driver.page_source, "lxml")
-            item = soup.find('code', attrs={"class":"EmbedCode-code"})
             text = soup.find_all("p")[-1].get_text()
-            embed = item.contents[0]
             tweetText = text
+            print(tweetText)
             response = {"result": f"{embed}"}
             response = json.dumps(response)
             return Response(response=response, status=200, mimetype="application/json")
