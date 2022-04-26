@@ -4,6 +4,7 @@ If editing .tex files with a lateX editor like texmaker
 
 The following may be necessary if running linux:
 sudo apt-get install texlive-science
+sudo apt-get install texlive-full
 
 ### Running Server ###
 1. Change endpoints in main.js to reflect your ip address:5000
