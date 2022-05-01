@@ -50,7 +50,7 @@ Arizona State University \\
 \maketitle
 
 \begin{abstract}
-    There is an incredible financial incentive to “solving” the problem of optimizing trading in the stock market. Many ideas have been tried and tested to varying degrees of success, basing their trading strategies on either mathematical models, ideas of momentum of the stock, volume, and other more advanced concepts as well. In this paper, we will discuss the development of several different trading strategies using modern machine learning and natural language processing. In this experiment, we will be applying our methodologies to the stocks AMZN and AAPL. Our data set includes over 100,000 news articles and tweets related to these tickers and market data for both stocks at the closing time between November 2017 and February 2019, which is the time interval we will be using to develop our trading strategies. In this paper, we will discuss the development of our strategies, which will be a combination of word encoders (Word2Vec, BERT, and Topic Modeling), sentiment analysis, and machine learning models (logistic regression and LightGBM). In this paper, we will outline our research plan, evaluation metrics, and timeline for the completion of the experiment.
+    There is an incredible financial incentive to “solving” the problem of optimizing trading in the stock market. Many ideas have been tried and tested to varying degrees of success, basing their trading strategies on either mathematical models of ideas of momentum of the stock, volume, or other technical indicators. In this paper, we will discuss the development of several different trading strategies using modern machine learning and natural language processing. In this experiment, we will be applying our methodologies to the stocks of Amazon.com, Inc. (AMZN) and Apple Inc. (AAPL). Our data set includes over 100,000 news articles and tweets related to these tickers and market data for both stocks at the closing time between November 2017 and February 2019, which is the time interval we will be using to develop our trading strategies. In this paper, we will discuss the development of our strategies, which will be a combination of word encoders (Word2Vec, BERT, and Topic Modeling), sentiment analysis, and machine learning models (logistic regression and LightGBM). In this paper, we will outline our research plan, evaluation metrics, and timeline for the completion of the experiment.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -58,13 +58,18 @@ Arizona State University \\
 \end{IEEEkeywords}
 
 \section{Introduction}
-The stock market allows people to purchase a public company’s stock, which is a small piece of that company \cite{b2}. Oftentimes, people purchase stocks in order to invest their money rather than putting their money in a savings account at a bank. Before online news articles and social media companies like Twitter, the stock market wouldn’t fluctuate as fast due to breaking news on a specific company. Lately, the United States has seen that news articles and tweets, from the renowned company, Twitter have begun to have an effect on the price of a certain company. Most companies also have social media platforms like Twitter and people that invest in these companies can infer things from sentiment and subject matter of the tweets coming from companies \cite{b6}. A notable example is one when Elon Musk tweeted about thinking about taking Tesla private at \$420 and that he had funding. After this the stock price increased dramatically \cite{b4}. One single person cannot keep up with the constant bombardment of information coming out on news articles and Twitter so our idea is to use this plentiful information and build models that can help predict stock price movement. We plan to use textual information by performing Natural Language Processing techniques like BERT and sentiment analysis and much more on the data sets soon to be described and use it to train our models and be able to predict stock directions in the stock market.
+The stock market allows people to purchase a public company’s stock, which is a small piece of that company \cite{b2}. The price of a stock can be affected by a number of different factors such as changes within the overall economy, changes within the industry, political events, war, decisions by company executives, environmental changes, and changes in customer behavior. Oftentimes, people purchase stocks in order to invest their money rather than putting their money in a savings account at a bank due to the higher potential growth rates.
+
+Lately, the United States has seen that news articles and social media, particularly tweets from the popular micro-blogging platform Twitter, have begun to have an effect on stock prices. Most companies have an online social media presence on platforms such as Twitter and people that invest in these companies can infer stock price information from the sentiment and subject matter of the tweets coming from companies or accounts which have access to company information \cite{b6}. A notable example is when Elon Musk tweeted about thinking about taking his company Tesla, Inc. (TSLA) private at \$420 after he had secured funding. After this tweet, the stock price increased dramatically \cite{b4}.
+
+It is nearly impossible for one single person to keep up with the constant bombardment of information coming out on news articles and Twitter, so our idea was to use this plentiful information and build models that can help predict stock price movement based on this information. We used textual information by performing Natural Language Processing techniques like BERT and sentiment analysis on the data sets soon to be described and used them to train our stock prediction models.
 
 \section{Problem Statement}
-The goal of this project is that our models should be able to take in a URL to a tweet and through our system it will parse the tweet and feed the text into the three models that we have created. After the result is generated it will be sent to our HTML interface and will display either an up or down arrow for what each model calculated. From the three results the majority of up or down arrows will determine a larger up or down arrow that will be displayed to tell the user which direction the models believe the stock will go. The problem that we are tackling is the issue with tweets having an effect on stock price. We can often observe that stocks are easily influenced by extremely negative or extremely positive tweets. The models are pre-trained for our dashboard so the results are generated fairly quickly.
+The goal of this project is to feed a tweet's URL into our system, which will then parse the tweet and feed the text into the three models that we have created. After the result is generated it is sent to our HTML interface and will display either an up or down arrow for what each model calculated. From the three results the majority of up or down arrows determine a larger up or down arrow that is displayed to tell the user which direction the models believe the stock will go. The problem that we are tackling is the issue with tweets having an effect on stock price. We can often observe that stocks are easily influenced by extremely negative or extremely positive tweets. The models are pre-trained for our dashboard so the results are generated fairly quickly.
 
 \section{Existing Methods and Algorithms}
-The idea to predict stock market patterns and trends using viral tweets and news is not anything innovative or unique as there currently exists various model implementations. Here are some examples in which popular models and methodologies are used to obtain such predictions or other similar predictions.
+The idea to predict stock market patterns and trends using viral tweets and news is not anything innovative or unique as there currently exist various model implementations. There are already some examples of popular models and methodologies that are used to obtain such predictions or other similar predictions.
+
 In \cite{b10}, the individual utilizes a Naive Bayes model on a set of verified tweet contents from publicly traded corporations executives and half-hourly stock data to predict stock movement of all NASDAQ and NYSE companies during that time of collection. The individual’s model was able to achieve an accuracy of 52\%.
 
 The authors in \cite{b1} utilize a logistic regression model on twitter content feeds and DJIA stock values from June 2009 to December 2009 to predict stock movement of DJIA. Their model was able to achieve an accuracy of 60\%.
@@ -77,7 +82,7 @@ The user from this study \cite{b14} was able to highlight the performance of a S
 
 \section{System Architecture and Algorithms}
 \subsection{Data Preprocessing}\label{AA}
-The data sets that will be used in this project are the following: AMZN and AAPL news, AMZN and AAPL stock prices, and AMZN and AAPL Tweets. Before extracting features from the text, the data had to be in the correct format. We merged the news data set with the stock data set on the date attribute. The same was done for the Tweets data set with the stock data set. Both data sets include the respective news content and Tweet content related to either AMZN or AAPL. The contents were cleaned to ensure that noise is reduced as much as possible - this includes lemmatizing the text, removing stop words, emoticons, punctuation, hashtags and other miscellaneous text that does not contribute meaning to the content. This also allows feature generation to be simpler and consistent. Each data set had the following attributes:
+The data sets that were used in this project were the following: AMZN and AAPL news, AMZN and AAPL stock prices, and AMZN and AAPL tweets. Before extracting features from the text, the data had to be in the correct format. We merged the news data set with the stock data set on the date attribute. The same was done for the tweets data set with the stock data set. Both data sets include the respective news content and tweet content related to either AMZN or AAPL. The contents were cleaned to ensure that noise was reduced as much as possible - this includes lemmatizing the text, removing stop words, emoticons, punctuation, hashtags and other miscellaneous text that does not contribute meaning to the content. This also allows feature generation to be simpler and consistent. Each data set had the following attributes:
 \begin{itemize}
     \item Standardized date and time
     \item Content (body of the news article or Tweet)
@@ -90,7 +95,7 @@ The data sets that will be used in this project are the following: AMZN and AAPL
 To generate the labels, we used the stock price at that time and date to determine whether or not the direction of the price was going up (1) or down (0).
 
 \subsection{Feature Generation}
-There are a few methods that were used to generate features from the text.
+There are a few methods that were used to generate features from the text:
 \begin{itemize}
     \item Word2Vec
     \item BERT
@@ -101,10 +106,10 @@ Word2Vec is a two-layer neural network that creates word vectors which can be us
 
 BERT provides a similar output to Word2Vec but takes a more complex, modern approach than Word2Vec. BERT, created by Google's NLP team, takes into account the bidirectional context of the tokens in a sentence during the training phase. It already comes pre-trained with a corpus of over 2.5 billion words \cite{b13}. On a technical level, the BERT architecture is built on top a transformer \cite{b11}. The exploration of BERT in this project is to see if these features provide better classification accuracy than the use of Word2Vec.
 
-Sentiment analysis is used to determine the overall opinion or feeling - positive, neutral, negative - of a document \cite{b8}. There are many pre-trained models and packages to use for sentiment analysis such as NLTK, TextBlob, and Gensim. For the purpose of this project, we will be using NLTK. We will be splitting each document by sentence, and get a sentiment score for that sentence. Once the end of the document is reached, we will take the average of the sentiment scores and assign it to the document. This score will be used in conjunction with both WordVec and BERT for feature generation.
+Sentiment analysis is used to determine the overall opinion or feeling - positive, neutral, negative - of a document \cite{b8}. There are many pre-trained models and packages to use for sentiment analysis such as NLTK, TextBlob, and Gensim. For the purpose of this project, we used NLTK. We split each document by sentence, and got a sentiment score for that sentence. Once the end of the document is reached, we took the average of the sentiment scores and assigned it to the document. This score was used in conjunction with both Word2Vec and BERT for feature generation.
 
 \subsection{Classification Models}
-There are a few models that will be used for the project. We will run both news and Twitter data sets on the models.
+There are a few models that were used for the project. We ran both news and Twitter data sets on the models.
 \begin{itemize}
     \item Logistic Regression
     \item LightGBM
@@ -115,39 +120,43 @@ Logistic Regression is a supervised learning algorithm that is commonly used for
 
 LightGBM is a gradient boosted, supervised machine learning framework. It is traditionally used on larger data sets since it supports parallel, distributed learning. At it's core, LightGBM is a decision tree algorithm but what makes it different from other boosting algorithms is that it splits the tree at the leaf whereas others split the tree depth-wise. This makes LightGBM more accurate since it can reduce the loss when growing at the leaf. Another advantage of using LightGBM for larger data sets is that the training time is reduced because LightGBM uses histogram algorithms to place continuous features into buckets, which in turn reduces the memory usage. The downside to this model is that the model can easily be overfit if the number of data samples is not large enough, or if the parameters are not tuned correctly \cite{b12}. Since the data sets for this project are fairly large, 475MB and 662MB for the news and Twitter data set respectively, it will be beneficial to experiment with a more complex model than Logistic Regression.
 
-Topic modeling is an unsupervised machine learning method that groups documents together based on similar topics. Under the hood, topic modeling counts the words in the text corpus and groups similar word patterns together to create topics \cite{b5}. Since this is an unsupervised method, no training is required. The output does not satisfy the classification task so more work will need to be done with this method to complete the task. The corpus for this method would remain the same as the firs two methods and each document will be assigned a "dominant" topic once the model is finished running. This dominant topic also has key phrases associated with it, so essentially each document will be assigned a dominant topic and key phrases. We will then create features from these key phrases by using Word2Vec or BERT in conjunction with the sentiment score. Once we have these features, we will train a a Logistic Regression model and run the classification this way. This is a different approach that has not been done yet in previous classes and uses an ensemble method to perform the classification task.
+Topic modeling is an unsupervised machine learning method that groups documents together based on similar topics. Under the hood, topic modeling counts the words in the text corpus and groups similar word patterns together to create topics \cite{b5}. Since this is an unsupervised method, no training is required. The output does not satisfy the classification task so more work will need to be done with this method to complete the task. The corpus for this method would remain the same as the firs two methods and each document will be assigned a "dominant" topic once the model is finished running. This dominant topic also has key phrases associated with it, so essentially each document will be assigned a dominant topic and key phrases. We created features from these key phrases by using Word2Vec or BERT in conjunction with the sentiment score. Once we had these features, we trained a a Logistic Regression model and ran the classification this way. This is a different approach that has not been done yet in previous classes and uses an ensemble method to perform the classification task.
 
-For this project, the team will be executing three different methods on two different data sets.
+For this project, the team executed three different methods on two different data sets.
 \begin{itemize}
     \item Method 1: Word2Vec, Sentiment Analysis, Logistic Regression
     \item Method 2: BERT, Sentiment Analysis, LightGBM
     \item Method 3: Topic Modeling, Word2Vec, Sentiment Analysis, Logistic Regression
 \end{itemize}
 \subsection{Method 1}
-This method will create features by encoding the text with Word2Vec in combination with sentiment scores. These vectors will then be the input for the logistic regression model. This method will be ran on the news and Twitter data set. 
+This method creates features by encoding the text with Word2Vec in combination with sentiment scores. These vectors will then be the input for the logistic regression model. This method runs on the news and Twitter data set.
 \subsection{Method 2}
-This method will create features by encoding the text with BERT in combination with sentiment scores. These vectors will then be the input for the LightGBM model. This method will be ran on the news and Twitter data set. 
+This method creates features by encoding the text with BERT in combination with sentiment scores. These vectors will then be the input for the LightGBM model. This method runs on the news and Twitter data set.
 \subsection{Method 3}
-This method will first group documents together if they have similar topics which will be ran by the LDA topic model. The topic model will then generate keywords for these groups and percentage of that document belonging to that group. These keywords will be encoded using Word2Vec. The word vectors in conjunction with sentiment score and the percentage mentioned above will be used as inputs for the logistic regression model.
+This method first groups documents together if they have similar topics and run them on the LDA topic model. The topic model will then generate keywords for these groups and the percentage of that document belonging to that group. These keywords will be encoded using Word2Vec. The word vectors in conjunction with sentiment score and the percentage mentioned above are used as inputs for the logistic regression model.
 
 \section{Data sets}
-The dataset we will be using consist of stock quotes for the companies Apple (AAPL) and AMAZON (AMZN) from the years 2017-2019. We will pull this data from csv files that consist of the stock quotes from intervals of every 5 minutes, 15 minutes, 30 minutes, 60 minutes, 4 hours, and 24 hours each corresponding to an individual file. The format of the .csv files contains headers of Date, Time, Open, Close, High, Low, and Volume stock quote values for the intervals specified above. The news articles that we will be using in our algorithms contain about 75,000 articles in .json format which contains: organizations, uuid, thread, url, image, domain rank, country, title, spam score, entities, locations, and organizations. The entities, locations, and organizations include fields with a name and sentiment value that can be used to pin down news articles related to Apple and Amazon.
+The dataset we used consists of stock quotes for the companies Apple (AAPL) and AMAZON (AMZN) from the years 2017-2019. We pulled this data from csv files that consist of the stock quotes from intervals of every 5 minutes, 15 minutes, 30 minutes, 60 minutes, 4 hours, and 24 hours each corresponding to an individual file. The format of the .csv files contains headers of Date, Time, Open, Close, High, Low, and Volume stock quote values for the intervals specified above. The news articles that we used in our algorithms contain about 75,000 articles in .json format which contains: organizations, uuid, thread, url, image, domain rank, country, title, spam score, entities, locations, and organizations. The entities, locations, and organizations include fields with a name and sentiment value that can be used to pin down news articles related to Apple and Amazon.
 For our solutions, we combined both the stock prices and news articles to obtain the relevant prices at the time of publication as well as prices after publication to determine the direction of price travel.
 
-The Twitter data set consists of a join between two separate tables: a Twitter data set found on Kaggle and the historical stock prices ranging from 2017-2019 which was sourced from a Python package, yfinance. The Kaggle data set contains the following columns: tweet ID, writer, post date, body, number of comments, number of retweets, number of likes, ticker symbol. This data set contains miscellaneous columns that will not be used, so we spliced the data set to only contain the columns that we need, which are post date, body, and ticker symbol. We then filtered out this data set to only include the AAPL and AMZN ticker symbol and joined this data set onto the yfinance data set which will give us the stock closing quote for that date for that ticker symbol. The resulting data frame has the following columns: post date, body, closing price for that day, and the next day's closing price. There are 1.8 million rows for this data set, but to keep consistency we will be sampling only 80,000 rows.
+The Twitter data set consists of a join between two separate tables: a Twitter data set found on Kaggle and the historical stock prices ranging from 2017-2019 which was sourced from a Python package, yfinance. The Kaggle data set contains the following columns: tweet ID, writer, post date, body, number of comments, number of retweets, number of likes, ticker symbol. This data set contains miscellaneous columns that will not be used, so we spliced the data set to only contain the columns that we need, which are post date, body, and ticker symbol. We then filtered out this data set to only include the AAPL and AMZN ticker symbol and joined this data set onto the yfinance data set which give us the stock closing quote for that date for that ticker symbol. The resulting data frame has the following columns: post date, body, closing price for that day, and the next day's closing price. There are 1.8 million rows for this data set, but to keep consistency we sampled only 80,000 rows.
 
 \section{UI / Visualization Interface Designs}
+See Fig. \ref{fig1}, Fig. \ref{fig2}, and Fig. \ref{fig3} for the final user interface of our model input and output.
 \begin{figure}[h!]
   \caption{Enter a URL to predict stock direction}
   \includegraphics[width=0.5\textwidth]{2.png}
+  \label{fig1}
 \end{figure}
 \begin{figure}[h!]
   \caption{Results from the 3 models}
   \includegraphics[width=0.5\textwidth]{1.png}
+  \label{fig2}
 \end{figure}
 \begin{figure}[h!]
   \caption{Current ticker price for AMZN and APPL}
   \includegraphics[width=0.5\textwidth]{3.png}
+  \label{fig3}
 \end{figure}
 
 \section{Task Division and Team Members' Contributions}
@@ -169,9 +178,9 @@ The Twitter data set consists of a join between two separate tables: a Twitter d
 \end{table}
 
 \section{Evaluation}
-To evaluate the performance of our machine learning models, we will split our data sets 80\%-20\% as training data and test data, respectively. We will run each method on the news data set and the Twitter data set and see how these two text mediums compare when predicting stock direction. Running all three methods will also allow us to compare how different models perform. 
+To evaluate the performance of our machine learning models, we split our data sets 80\%-20\% as training data and test data, respectively. We  ran each method on the news data set and the Twitter data set and saw how these two text mediums compare when predicting stock direction. Running all three methods allowed us to compare how different models perform.
 
-The metrics we will be using are the F1 score and accuracy. The F1 score can be calculated as follows:
+The metrics we used are the F1 score and accuracy. The F1 score can be calculated as follows:
 \begin{equation*}
  \frac{tp}{tp+\frac{1}{2}(fp+fn)}
 \end{equation*}
@@ -181,14 +190,12 @@ The accuracy can be calculated as follows:
 \end{equation*}
 where $tp$ is the number of true positives, $fn$ is the number of false negatives, $tn$ is the number of true negatives, and $fp$ is the number of false positives. 
 
-Both accuracy and F1 scores are typically used for classification problems. The F1 score is better at taking the distribution of the data into consideration which could be better at measuring performance of data that is heavily imbalanced. On the other hand, accuracy is intuitively easier to understand and performs well when the data is balanced. Since we do not know how the data is distributed yet, we will be reporting both metrics.
+Both accuracy and F1 scores are typically used for classification problems. The F1 score is better at taking the distribution of the data into consideration which could be better at measuring performance of data that is heavily imbalanced. On the other hand, accuracy is intuitively easier to understand and performs well when the data is balanced. Since we do not know how the data is distributed yet, we reported both metrics.
 
-We have evaluation metrics for the three models used in our project.
+The evaluation metrics for the three models used in our project are as follows:
 
-Models: \\ \\
-M1. Word2Vec, Sentiment Analysis, Logistic Regression \\
-M2. BERT, Sentiment Analysis, LightGBM \\
-M3. Topic Modeling, Sentiment Analysis, Logistic Regression \\
+
+
 
 \begin{table}[htp]
     \begin{center}
@@ -201,12 +208,21 @@ M3. Topic Modeling, Sentiment Analysis, Logistic Regression \\
         \end{tabular}
     \end{center}
 \end{table}
+where
+
+\begin{itemize}
+ \item M1: Word2Vec, Sentiment Analysis, Logistic Regression
+ \item M2: BERT, Sentiment Analysis, LightGBM
+ \item M3: Topic Modeling, Sentiment Analysis, Logistic Regression
+\end{itemize}
 
 Overall, the performance of the models did not perform significantly better than a random classifier. The reason behind this could be that more text preprocessing needs to be done or the nature of the data could indicate that a logistic regression model is not the best type of model for this data distribution. Compared to other work done, the models in this project did not perform very different from the other models that were created in previous works. In the previous works that we read about, other groups' models averaged a 50-60\% accuracy which is not far off from our models. 
 
 \section{Conclusions}
 Overall, the models performed similarly between the news dataset and the Twitter dataset, even though the jargon between the two differ greatly. Our models performed similarly to previous works done by other individuals and organizations listed above in this report. 
-There is plenty of future work that could compliment the work that we have done this semester. For example, we could assign a higher weight to Twitter accounts that have a higher influence. This would add another dimension in the feature vector and weigh Tweets from accounts like Elon Musk higher than Tweets from smaller accounts. This could improve the performance of the models that were ran on the Twitter data set. Another extension for this project that we could explore is doing post-model exploratory analysis. We could take a subset of the news headlines that were predicted as a class 0 (decreasing stock price) and look at the similarities of this subset such as the sentiment scores, or perform K-means clustering on the word vectors. 
+
+There is plenty of future work that could compliment the work that we have done this semester. For example, we could assign a higher weight to Twitter accounts that have a higher influence determined by metrics such as follower count or industry relevance. This would add another dimension in the feature vector and weigh Tweets from accounts like Elon Musk higher than Tweets from smaller accounts. This could improve the performance of the models that were ran on the Twitter data set. Another extension for this project that we could explore is doing post-model exploratory analysis. We could take a subset of the news headlines that were predicted as a class 0 (decreasing stock price) and look at the similarities of this subset such as the sentiment scores, or perform K-means clustering on the word vectors.
+
 There is still a lot of work to be done in the field of predictive machine learning that can benefit all aspects of life. Working on a stock price predictor could result in a powerful tool for analysts and even the average consumer who likes to participate in the stock market. As algorithms and computer performances advance, perhaps the predictive performance could be greatly improved. 
 
 \begin{thebibliography}{00}
