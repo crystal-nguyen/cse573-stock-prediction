@@ -202,7 +202,12 @@ M3. Topic Modeling, Sentiment Analysis, Logistic Regression \\
     \end{center}
 \end{table}
 
+Overall, the performance of the models did not perform significantly better than a random classifier. The reason behind this could be that more text preprocessing needs to be done or the nature of the data could indicate that a logistic regression model is not the best type of model for this data distribution. Compared to other work done, the models in this project did not perform very different from the other models that were created in previous works. In the previous works that we read about, other groups' models averaged a 50-60\% accuracy which is not far off from our models. 
+
 \section{Conclusions}
+Overall, the models performed similarly between the news dataset and the Twitter dataset, even though the jargon between the two differ greatly. Our models performed similarly to previous works done by other individuals and organizations listed above in this report. 
+There is plenty of future work that could compliment the work that we have done this semester. For example, we could assign a higher weight to Twitter accounts that have a higher influence. This would add another dimension in the feature vector and weigh Tweets from accounts like Elon Musk higher than Tweets from smaller accounts. This could improve the performance of the models that were ran on the Twitter data set. Another extension for this project that we could explore is doing post-model exploratory analysis. We could take a subset of the news headlines that were predicted as a class 0 (decreasing stock price) and look at the similarities of this subset such as the sentiment scores, or perform K-means clustering on the word vectors. 
+There is still a lot of work to be done in the field of predictive machine learning that can benefit all aspects of life. Working on a stock price predictor could result in a powerful tool for analysts and even the average consumer who likes to participate in the stock market. As algorithms and computer performances advance, perhaps the predictive performance could be greatly improved. 
 
 \begin{thebibliography}{00}
     \bibitem{b1} A. Mittal and A. Goel, “Stock Prediction Using Twitter Sentiment Analysis,” Stanford, 2011. [Online]. Available: https://cs229.stanford.edu/proj2011/GoelMittal-StockMarketPredictionUsingTwitterSentimentAnalysis.pdf. [Accessed: 01-Mar-2022].
