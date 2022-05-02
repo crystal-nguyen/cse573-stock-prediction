@@ -139,9 +139,14 @@ For our solutions, we combined both the stock prices and news articles to obtain
 The Twitter data set consists of a join between two separate tables: a Twitter data set found on Kaggle and the historical stock prices ranging from 2017-2019 which was sourced from a Python package, yfinance. The Kaggle data set contains the following columns: tweet ID, writer, post date, body, number of comments, number of retweets, number of likes, ticker symbol. This data set contains miscellaneous columns that will not be used, so we spliced the data set to only contain the columns that we need, which are post date, body, and ticker symbol. We then filtered out this data set to only include the AAPL and AMZN ticker symbol and joined this data set onto the yfinance data set which give us the stock closing quote for that date for that ticker symbol. The resulting data frame has the following columns: post date, body, closing price for that day, and the next day's closing price. There are 1.8 million rows for this data set, but to keep consistency we sampled only 80,000 rows.
 
 \section{UI / Visualization Interface Designs}
+
 \includegraphics[width=9cm, height=7cm]{2.png}
+The figure above showcases a textbox where users can paste in a twitter link of a tweet that they wish to analyze. After the user pastes in their desired tweet and clicks the "Predict Stock Direction" button, the embed tweet and the overall stock direction, which is compiled results of the 3 models is shown below. 
 \includegraphics[width=9cm, height=7cm]{1.png}
+The figure above showcases the stock direction predicted by each of the models and their respective performances on the news dataset.
 \includegraphics[width=9cm, height=7cm]{3.png}
+The figure above showcases the performance of each of the models on the tweets dataset along with a real-time interactive stock graph for Apple and Amazon.
+
 
 
 \section{Task Division and Team Members' Contributions}
